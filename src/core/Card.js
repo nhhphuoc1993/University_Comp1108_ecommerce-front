@@ -10,13 +10,13 @@ const Card = ({
     showAddToCartButton = true,
     cartUpdate = false,
     showRemoveProductButton = false,
-    setRun = f => f, // default value of function
+    setRun = (f) => f, // default value of function
     run = undefined, // default value of undefined
 }) => {
     const [redirect, setRedirect] = useState(false);
     const [count, setCount] = useState(product.count);
 
-    const showViewButton = showViewProductButton =>
+    const showViewButton = (showViewProductButton) =>
         showViewProductButton && (
             <Link to={`/product/${product._id}`} className="mr-2">
                 <button className="btn btn-outline-primary mt-2 mb-2 ">View Product</button>
@@ -25,25 +25,27 @@ const Card = ({
 
     const addToCart = () => {
         // product has already existed in the props
-        addItem(product, () => {
-            setRedirect(true);
-        });
+        // addItem(product, () => {
+        //     setRedirect(true);
+        // });
+        // OR
+        addItem(product, setRedirect(true));
     };
 
-    const shouldRedirect = redirect => {
+    const shouldRedirect = (redirect) => {
         if (redirect) {
             return <Redirect to="/cart" />;
         }
     };
 
-    const showAddToCart = showAddToCartButton =>
+    const showAddToCart = (showAddToCartButton) =>
         showAddToCartButton && (
             <button onClick={addToCart} className="btn btn-outline-warning mt-2 mb-2">
                 Add to cart
             </button>
         );
 
-    const showRemoveButton = showRemoveProductButton =>
+    const showRemoveButton = (showRemoveProductButton) =>
         showRemoveProductButton && (
             <button
                 onClick={() => {
@@ -56,14 +58,14 @@ const Card = ({
             </button>
         );
 
-    const showStock = quantity =>
+    const showStock = (quantity) =>
         quantity > 0 ? (
             <span className="badge badge-primary badge-pill">In Stock</span>
         ) : (
             <span className="badge badge-primary badge-pill">Out of Stock</span>
         );
 
-    const handleChange = productId => event => {
+    const handleChange = (productId) => (event) => {
         setRun(!run); // run useEffect in parent Cart
         // make sure the quantity value is always 1
         setCount(event.target.value < 1 ? 1 : event.target.value);
@@ -72,7 +74,7 @@ const Card = ({
         }
     };
 
-    const showCartUpdateOptions = cartUpdate =>
+    const showCartUpdateOptions = (cartUpdate) =>
         cartUpdate && (
             <div>
                 <div className="input-group mb-3">

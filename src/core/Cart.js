@@ -7,14 +7,16 @@ import Checkout from "./Checkout";
 
 const Cart = () => {
     const [items, setItems] = useState([]);
+    // const [cartSize, setCartSize] = useState([]);
     const [run, setRun] = useState(false);
 
     useEffect(() => {
+        console.log("MAX DEPTH ...");
         setItems(getCart());
         // use [run] instead of [items] to avoid error (section 108)
     }, [run]);
 
-    const showItems = items => {
+    const showItems = (items) => {
         return (
             <div>
                 <h2>Your cart has {`${items.length}`} items</h2>
@@ -28,6 +30,7 @@ const Cart = () => {
                         showRemoveProductButton={true}
                         setRun={setRun}
                         run={run}
+                        // changeCartSize={changeCartSize}
                     />
                 ))}
             </div>
@@ -41,16 +44,11 @@ const Cart = () => {
     );
 
     return (
-        <Layout
-            title="Shopping Cart"
-            description="Manage your cart items"
-            className="container-fluid"
-        >
+        <Layout title="Shopping Cart" description="Checkout now!" className="container-fluid">
             <div className="row">
                 <div className="col-6">
                     {items.length > 0 ? showItems(items) : noItemsMessage()}
                 </div>
-
                 <div className="col-6">
                     <h2 className="mb-4">Your cart summary</h2>
                     <hr />

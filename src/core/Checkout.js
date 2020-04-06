@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Layout from "./Layout";
-import { getProducts, getBraintreeClientToken, processPayment, createOrder } from "./apiCore";
-import Card from "./Card";
+import { getBraintreeClientToken, processPayment, createOrder } from "./apiCore";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import DropIn from "braintree-web-drop-in-react";
 import { emptyCart } from "./cartHelpers";
 
-const Checkout = ({ products, setRun = f => f, run = undefined }) => {
+const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     const [data, setData] = useState({
         loading: false,
         success: false,
@@ -20,7 +18,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
     const token = isAuthenticated() && isAuthenticated().token;
 
     const getToken = (userId, token) => {
-        getBraintreeClientToken(userId, token).then(data => {
+        getBraintreeClientToken(userId, token).then((data) => {
             if (data.error) {
                 setData({ ...data, error: data.error });
             } else {
@@ -33,7 +31,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
         getToken(userId, token);
     }, []);
 
-    const handleAddress = event => {
+    const handleAddress = (event) => {
         setData({ ...data, address: event.target.value });
     };
 
@@ -61,7 +59,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
         let nonce;
         let getNonce = data.instance
             .requestPaymentMethod()
-            .then(data => {
+            .then((data) => {
                 // console.log(data);
                 nonce = data.nonce;
                 // once having nonce (card type and number) => send nonce as paymentMethodNonce to the backend and also total to be charged
@@ -72,8 +70,8 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
                 };
 
                 processPayment(userId, token, paymentData)
-                    .then(response => {
-                        console.log("Checkout componenet/processPayment", response);
+                    .then((response) => {
+                        // console.log("Checkout componenet/processPayment", response);
                         // setData({ ...data, success: response.success });
                         // create order
                         const createOrderData = {
@@ -84,27 +82,27 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
                         };
 
                         createOrder(userId, token, createOrderData)
-                            .then(response => {
-                                console.log("Checkout componenet/createOrder", response);
+                            .then((response) => {
+                                // console.log("Checkout componenet/createOrder", response);
 
                                 // empty cart
                                 emptyCart(() => {
                                     setRun(!run); // run useEffect in parent Cart
-                                    console.log("payment success and empty cart");
+                                    // console.log("payment success and empty cart");
                                     setData({ loading: false, success: true });
                                 });
                             })
-                            .catch(error => {
+                            .catch((error) => {
                                 console.log(error);
                                 setData({ loading: false });
                             });
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         console.log(error);
                         setData({ loading: false });
                     });
             })
-            .catch(error => {
+            .catch((error) => {
                 // console.log("dropin error:", error);
                 setData({ ...data, error: error.message });
             });
@@ -130,7 +128,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
                                 flow: "vault",
                             },
                         }}
-                        onInstance={instance => (data.instance = instance)}
+                        onInstance={(instance) => (data.instance = instance)}
                     />
                     <button onClick={buy} className="btn btn-success btn-block">
                         Pay
@@ -140,19 +138,19 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
         </div>
     );
 
-    const showError = error => (
+    const showError = (error) => (
         <div className="alert alert-danger" style={{ display: error ? "" : "none" }}>
             {error}
         </div>
     );
 
-    const showSuccess = success => (
+    const showSuccess = (success) => (
         <div className="alert alert-info" style={{ display: success ? "" : "none" }}>
             Thanks! Your payment was successful!
         </div>
     );
 
-    const showLoading = loading => loading && <h2 className="text-danger">Loading...</h2>;
+    const showLoading = (loading) => loading && <h2 className="text-danger">Loading...</h2>;
     return (
         <div>
             {/* {JSON.stringify(products)} */}
