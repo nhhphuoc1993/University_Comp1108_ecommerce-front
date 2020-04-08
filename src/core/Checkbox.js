@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const Checkbox = ({ categories, handleFilters }) => {
     const [checked, setChecked] = useState([]);
     // use 'category => {' cause error
-    const handleToggle = category => () => {
+    const handleToggle = (category) => () => {
         // return the 1st index or -1
         const currentCategoryId = checked.indexOf(category);
         const newCheckedCategoryId = [...checked];
@@ -14,7 +14,7 @@ const Checkbox = ({ categories, handleFilters }) => {
         } else {
             newCheckedCategoryId.splice(currentCategoryId, 1);
         }
-        console.log("Checkbox componet/newCheckedCategoryId", newCheckedCategoryId);
+        // console.log("Checkbox componet/newCheckedCategoryId", newCheckedCategoryId);
         setChecked(newCheckedCategoryId);
         handleFilters(newCheckedCategoryId);
     };

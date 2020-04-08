@@ -11,7 +11,7 @@ const Cart = () => {
     const [run, setRun] = useState(false);
 
     useEffect(() => {
-        console.log("MAX DEPTH ...");
+        // console.log("MAX DEPTH ...");
         setItems(getCart());
         // use [run] instead of [items] to avoid error (section 108)
     }, [run]);

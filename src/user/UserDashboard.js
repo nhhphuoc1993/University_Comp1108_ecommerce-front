@@ -16,7 +16,7 @@ const UserDashboard = () => {
 
     const init = (userId, token) => {
         getPurchaseHistory(userId, token).then((data) => {
-            console.log(data);
+            // console.log(data);
             if (data.error) {
                 console.log(data.error);
             } else setHistory(data);

@@ -19,7 +19,7 @@ const Shop = () => {
 
     // load categories and set form data
     const init = () => {
-        getCategories().then(data => {
+        getCategories().then((data) => {
             if (data.error) {
                 setError({ error: data.error });
             } else {
@@ -28,9 +28,9 @@ const Shop = () => {
         });
     };
 
-    const loadFilterResults = newFilters => {
+    const loadFilterResults = (newFilters) => {
         // console.log("Show componenet/loadFilterResults/newFilters", newFilters);
-        getFilteredProducts(skip, limit, newFilters).then(data => {
+        getFilteredProducts(skip, limit, newFilters).then((data) => {
             if (data.error) {
                 setError(data.error);
             } else {
@@ -43,11 +43,11 @@ const Shop = () => {
 
     const loadMore = () => {
         let toSkip = skip + limit;
-        getFilteredProducts(toSkip, limit, myFilters.filters).then(data => {
+        getFilteredProducts(toSkip, limit, myFilters.filters).then((data) => {
             if (data.error) {
                 setError(data.error);
             } else {
-                console.log("Shop component/loadMore/data.size,limit", data.size, limit);
+                // console.log("Shop component/loadMore/data.size,limit", data.size, limit);
                 setFilterResults([...filterResults, ...data.products]);
                 setSize(data.size);
                 setSkip(toSkip);
@@ -73,7 +73,7 @@ const Shop = () => {
     }, []);
 
     const handleFilters = (filters, filterBy) => {
-        console.log("Shop componenet/filters,filterBy ", filters, filterBy);
+        // console.log("Shop componenet/filters,filterBy ", filters, filterBy);
         const newFilters = { ...myFilters };
         newFilters.filters[filterBy] = filters;
 
@@ -87,7 +87,7 @@ const Shop = () => {
         setMyFilters(newFilters);
     };
 
-    const handlePrice = value => {
+    const handlePrice = (value) => {
         const data = prices;
         let array = [];
 
@@ -111,7 +111,7 @@ const Shop = () => {
                     <ul>
                         <Checkbox
                             categories={categories}
-                            handleFilters={filters => handleFilters(filters, "category")}
+                            handleFilters={(filters) => handleFilters(filters, "category")}
                         />
                     </ul>
                     {/* {JSON.stringify(categories)} */}
@@ -120,7 +120,7 @@ const Shop = () => {
                     <div>
                         <RadioBox
                             prices={prices}
-                            handleFilters={filters => handleFilters(filters, "price")}
+                            handleFilters={(filters) => handleFilters(filters, "price")}
                         />
                     </div>
                     {/* {JSON.stringify(prices)} */}
