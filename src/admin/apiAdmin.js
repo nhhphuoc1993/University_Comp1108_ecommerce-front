@@ -19,6 +19,24 @@ export const createCategory = (userId, token, category) => {
         });
 };
 
+// NOTE: from final-improvement
+export const updateCategory = (categoryId, userId, token, category) => {
+    return fetch(`${API}/category/${categoryId}/${userId}`, {
+        method: "PUT",
+        headers: {
+            // content type?
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(category),
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .catch((err) => console.log(err));
+};
+
 export const createProduct = (userId, token, product) => {
     // send product as form-data
     return fetch(`${API}/product/create/${userId}`, {
@@ -35,6 +53,16 @@ export const createProduct = (userId, token, product) => {
         .catch((err) => {
             console.log(err);
         });
+};
+
+export const getCategory = (categoryId) => {
+    return fetch(`${API}/category/${categoryId}`, {
+        method: "GET",
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .catch((err) => console.log(err));
 };
 
 export const getCategories = () => {
@@ -91,8 +119,16 @@ export const updateOrderStatus = (userId, token, orderId, status) => {
         .catch((err) => console.log(err));
 };
 
+/**
+ * to perform crud on product
+ * get all products
+ * get a single product
+ * update single product
+ * delete single product
+ */
+
 export const getProducts = () => {
-    return fetch(`${API}/products`, {
+    return fetch(`${API}/products?limit=undefined`, {
         method: "GET",
     })
         .then((response) => {

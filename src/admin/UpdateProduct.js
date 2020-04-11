@@ -16,13 +16,15 @@ const UpdateProduct = ({ match }) => {
         photo: "",
         loading: false,
         error: false,
-        // to inform user
         createdProduct: "",
         redirectToProfile: false,
         formData: "",
     });
 
     const { user, token } = isAuthenticated();
+
+    // NOTE: from final-improvements
+    // const [categories, setCategories] = useState([]);
 
     const {
         name,
@@ -77,6 +79,16 @@ const UpdateProduct = ({ match }) => {
             }
         });
     };
+    // NOTES: from final-improvements
+    // const initCategories = () => {
+    //     getCategories().then(data => {
+    //         if (data.error) {
+    //             setValues({ ...values, error: data.error });
+    //         } else {
+    //             setCategories(data);
+    //         }
+    //     });
+    // };
 
     useEffect(() => {
         init(match.params.productId);

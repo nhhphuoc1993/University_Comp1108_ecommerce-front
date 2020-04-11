@@ -16,6 +16,7 @@ import Orders from "./admin/Orders";
 import Profile from "./user/Profile";
 import ManageProducts from "./admin/ManageProducts";
 import UpdateProduct from "./admin/UpdateProduct";
+import UpdateCategory from "./admin/UpdateCategory";
 
 require("dotenv").config();
 
@@ -40,6 +41,13 @@ const Routes = () => {
                     path="/admin/product/update/:productId"
                     exact
                     component={UpdateProduct}
+                />
+
+                {/* NOTE: from final-improvement */}
+                <AdminRoute
+                    path="/admin/category/update/:categoryId"
+                    exact
+                    component={UpdateCategory}
                 />
             </Switch>
         </BrowserRouter>

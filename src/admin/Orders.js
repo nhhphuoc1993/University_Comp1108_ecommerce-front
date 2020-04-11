@@ -11,7 +11,7 @@ const Orders = () => {
     const { user, token } = isAuthenticated();
 
     const loadOrders = () => {
-        listOrders(user._id, token).then(data => {
+        listOrders(user._id, token).then((data) => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -21,7 +21,7 @@ const Orders = () => {
     };
 
     const loadStatusValues = () => {
-        getStatusValues(user._id, token).then(data => {
+        getStatusValues(user._id, token).then((data) => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -53,7 +53,7 @@ const Orders = () => {
     );
 
     const handleStatusChange = (event, orderId) => {
-        updateOrderStatus(user._id, token, orderId, event.target.value).then(data => {
+        updateOrderStatus(user._id, token, orderId, event.target.value).then((data) => {
             if (data.error) {
                 console.log("Update order status");
             } else {
@@ -62,10 +62,10 @@ const Orders = () => {
         });
     };
 
-    const showStatus = o => (
+    const showStatus = (o) => (
         <div className="form-group">
             <h3 className="mark mb-4">Status: {o.status}</h3>
-            <select className="form-control" onChange={e => handleStatusChange(e, o._id)}>
+            <select className="form-control" onChange={(e) => handleStatusChange(e, o._id)}>
                 <option>Update Status</option>
                 {statusValues.map((status, index) => (
                     <option key={index} value={status}>
@@ -80,6 +80,7 @@ const Orders = () => {
         <Layout
             title="Orders"
             description={`G'day ${user.name}, you can manage all the orders here`}
+            className="container-fluid"
         >
             <div className="row">
                 <div className="col-md-8 offset-md-2">
@@ -131,7 +132,7 @@ const Orders = () => {
                             </div>
                         );
                     })}
-                    {JSON.stringify(orders)}
+                    {/* {JSON.stringify(orders)} */}
                 </div>
             </div>
         </Layout>
