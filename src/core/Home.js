@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Layout from "./Layout";
 import { getProducts } from "./apiCore";
 import Card from "./Card";
 import Search from "./Search";
+
+import Header from "./Header";
+import "../styles.css";
 
 const Home = () => {
     const [productsBySell, setProductsBySell] = useState([]);
@@ -10,7 +13,7 @@ const Home = () => {
     const [error, setError] = useState(false);
 
     const loadProductsBySell = () => {
-        getProducts("sold").then(data => {
+        getProducts("sold").then((data) => {
             if (data.error) {
                 setError(data.error);
             } else {
@@ -20,7 +23,7 @@ const Home = () => {
     };
 
     const loadProductsByArrival = () => {
-        getProducts("createdAt").then(data => {
+        getProducts("createdAt").then((data) => {
             if (data.error) {
                 setError(data.error);
             } else {
@@ -35,30 +38,36 @@ const Home = () => {
     }, []);
 
     return (
-        <Layout
-            title="Home Page"
-            description="Node React Ecommerce App"
-            className="container-fluid"
-        >
-            <Search />
-            <h2 className="mb-4">New Arrivals</h2>
-            <div className="row">
-                {productsByArrival.map((product, i) => (
-                    <div key={i} className="col-4 mb-3">
-                        <Card product={product} />
-                    </div>
-                ))}
+        <Fragment>
+            <div className="super_container">
+                <Header />
             </div>
 
-            <h2 className="mb-4">Best Sellers</h2>
-            <div className="row">
-                {productsBySell.map((product, i) => (
-                    <div key={i} className="col-4 mb-3">
-                        <Card product={product} />
-                    </div>
-                ))}
-            </div>
-        </Layout>
+            <Layout
+                title="Home Page"
+                description="Node React Ecommerce App"
+                className="container-fluid"
+            >
+                <Search />
+                <h2 className="mb-4">New Arrivals</h2>
+                <div className="row">
+                    {productsByArrival.map((product, i) => (
+                        <div key={i} className="col-4 mb-3">
+                            <Card product={product} />
+                        </div>
+                    ))}
+                </div>
+
+                <h2 className="mb-4">Best Sellers</h2>
+                <div className="row">
+                    {productsBySell.map((product, i) => (
+                        <div key={i} className="col-4 mb-3">
+                            <Card product={product} />
+                        </div>
+                    ))}
+                </div>
+            </Layout>
+        </Fragment>
     );
 };
 
