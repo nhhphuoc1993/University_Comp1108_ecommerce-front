@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import Card from "./Card";
+import React, { useState, useEffect, Fragment } from "react";
+import Card2 from "./Card2";
 import { getCategories, list } from "./apiCore";
+import { MDBContainer, MDBRow, MDBCol, MDBFormInline, MDBBtn } from "mdbreact";
 
 const Search = () => {
     const [data, setData] = useState({
@@ -14,7 +15,7 @@ const Search = () => {
     const { categories, category, search, results, searched } = data;
 
     const loadCategories = () => {
-        getCategories().then(data => {
+        getCategories().then((data) => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -28,9 +29,8 @@ const Search = () => {
     }, []);
 
     const searchData = () => {
-        // console.log("Search.js/searchData/search,category", search, category);
         if (search) {
-            list({ search: search || undefined, category: category }).then(response => {
+            list({ search: search || undefined, category: category }).then((response) => {
                 if (response.error) {
                     console.log(response.error);
                 } else {
@@ -40,12 +40,12 @@ const Search = () => {
         }
     };
 
-    const searchSubmit = e => {
+    const searchSubmit = (e) => {
         e.preventDefault();
         searchData();
     };
 
-    const handleChange = name => event => {
+    const handleChange = (name) => (event) => {
         setData({ ...data, [name]: event.target.value, searched: false });
     };
 
@@ -60,63 +60,80 @@ const Search = () => {
 
     const searchedProducts = (results = []) => {
         return (
-            <div>
-                <h2 className="mt-4 mb-4">{searchMessage(searched, results)}</h2>
-                <div className="row">
+            <MDBRow>
+                <h2 className="mt-4">{searchMessage(searched, results)}</h2>
+                <div className="d-flex flex-wrap align-content-center justify-content-center">
                     {results.map((product, i) => (
-                        <Card key={i} product={product} />
+                        <Card2
+                            key={i}
+                            product={product}
+                            cardClass="m-3"
+                            cardStyle={{ width: "400px", height: "750px" }}
+                            viewProductBtnStyle={{ fontSize: "small", width: "145px" }}
+                            addToCartBtnStyle={{ fontSize: "small", width: "145px" }}
+                            cardImgStyle={{ width: "100%", height: "450px" }}
+                            groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap pb-4"
+                        />
                     ))}
                 </div>
-            </div>
+            </MDBRow>
         );
     };
 
     const searchForm = () => (
-        <form onSubmit={searchSubmit}>
-            <span className="input-group-text">
-                <div className="input-group input-group-lg ">
-                    <div className="input-group-prepend">
-                        {/* className and style of select element is different from the code in order to create same animation and visualization with the video */}
-                        <select
-                            className="custom-select custom-select-lg mr-2"
-                            onChange={handleChange("category")}
-                            style={{
-                                backgroundColor: "#e9ecef",
-                                border: "none",
-                                boxShadow: "none",
-                            }}
-                        >
-                            <option value="All">All</option>
-                            {categories.map((c, i) => (
-                                <option key={i} value={c._id}>
-                                    {c.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <input
-                        type="search"
-                        className="form-control"
-                        onChange={handleChange("search")}
-                        placeholder="Search by name"
-                    />
-                </div>
-                <div className="btn input-group-append" style={{ border: "none" }}>
-                    <button className="input-group-text">Search</button>
-                </div>
-            </span>
-        </form>
+        <MDBFormInline className="md-form mr-auto " onSubmit={searchSubmit}>
+            <MDBCol md="3">
+                <select
+                    className="browser-default custom-select w-100 rounded-pill border-secondary"
+                    style={{ fontSize: "large" }}
+                    onChange={handleChange("category")}
+                >
+                    <option value="All">All categories</option>
+                    {categories.map((c, i) => (
+                        <option key={i} value={c._id}>
+                            {c.name}
+                        </option>
+                    ))}
+                </select>
+            </MDBCol>
+            <MDBCol md="7">
+                <input
+                    className="form-control form-control-lg w-100"
+                    type="text"
+                    placeholder="Search by name"
+                    aria-label="Search"
+                    onChange={handleChange("search")}
+                />
+            </MDBCol>
+            <MDBCol md="2">
+                <MDBBtn
+                    gradient="aqua"
+                    rounded
+                    type="submit"
+                    className="btn btn-md w-100"
+                    style={{ fontSize: "medium" }}
+                >
+                    Search
+                </MDBBtn>
+            </MDBCol>
+        </MDBFormInline>
     );
 
     return (
-        <div className="row">
-            {/* <h2>Search bar {JSON.stringify(categories)}</h2> */}
-            <div className="container mb-3">
-                {searchForm()}
-                {/* {JSON.stringify(results)} */}
-            </div>
-            <div className="container-fluid mb-3">{searchedProducts(results)}</div>
-        </div>
+        <MDBRow>
+            <MDBContainer>{searchForm()}</MDBContainer>
+            <MDBContainer fluid>
+                {results && results.length > 0 ? (
+                    searchedProducts(results)
+                ) : (
+                    <div className="text-center">
+                        <h5>
+                            <em>Not find any product yet!</em>
+                        </h5>
+                    </div>
+                )}
+            </MDBContainer>
+        </MDBRow>
     );
 };
 

@@ -1,20 +1,18 @@
-import React from "react";
-import Menu from "./Menu";
-import Menu2 from "./Menu2";
-import "../styles.css";
+import React, { Fragment } from "react";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import "../styles.css";
+import Menu from "./Menu";
+import Footer from "./Footer";
+import Carousel from "./Carousel";
 
 const Layout = ({ title = "Title", description = "Description", className, children }) => (
     <div>
-        <Menu2 />
         <Menu />
-        <div className="jumbotron">
-            <h2>{title}</h2>
-            <p className="lead">{description}</p>
-        </div>
+        <Carousel />
         <div className={className}>{children}</div>
+        <Footer />
     </div>
 );
 
