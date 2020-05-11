@@ -8,10 +8,18 @@ const Card2 = ({
     cardStyle = {},
     cardClass = "",
     cardImgStyle = {},
-    viewProductBtnStyle = {},
-    addToCartBtnStyle = {},
-    removeProductBtnStyle = {},
+    cardBodyClass = "text-center",
+    cardBodyTitleClass = "",
+    cardBodyTextStyle = {},
+    cardBodyTextClass = "",
+    cardBodyTitleStyle = {},
     groupBtnStyle = {},
+    viewProductBtnClass = "",
+    viewProductBtnStyle = {},
+    addToCartBtnClass = "",
+    addToCartBtnStyle = {},
+    removeProductBtnClass = "",
+    removeProductBtnStyle = {},
     product = {},
     showViewProductButton = true,
     showAddToCartButton = true,
@@ -23,11 +31,11 @@ const Card2 = ({
     const [redirect, setRedirect] = useState(false);
     const [count, setCount] = useState(product.count);
 
-    const showViewButton = (showViewProductButton, viewProductBtnStyle) =>
+    const showViewButton = (showViewProductButton, viewProductBtnClass, viewProductBtnStyle) =>
         showViewProductButton && (
             <Link
                 to={`/product/${product._id}`}
-                class="btn btn-md btn-cyan"
+                className={`btn ` + viewProductBtnClass}
                 style={viewProductBtnStyle}
             >
                 View Product
@@ -49,21 +57,29 @@ const Card2 = ({
         }
     };
 
-    const showAddToCart = (showAddToCartButton, addToCartBtnStyle) =>
+    const showAddToCart = (showAddToCartButton, addToCartBtnClass, addToCartBtnStyle) =>
         showAddToCartButton && (
-            <button onClick={addToCart} className="btn btn-md btn-pink" style={addToCartBtnStyle}>
+            <button
+                onClick={addToCart}
+                className={`btn ` + addToCartBtnClass}
+                style={addToCartBtnStyle}
+            >
                 Add to cart
             </button>
         );
 
-    const showRemoveButton = (showRemoveProductButton, removeProductBtnStyle) =>
+    const showRemoveButton = (
+        showRemoveProductButton,
+        removeProductBtnClass,
+        removeProductBtnStyle,
+    ) =>
         showRemoveProductButton && (
             <button
                 onClick={() => {
                     removeItem(product._id);
                     setRun(!run); // run useEffect in parent Cart
                 }}
-                className="btn btn-md btn-danger"
+                className={`btn ` + removeProductBtnClass}
                 style={removeProductBtnStyle}
             >
                 Remove product
@@ -88,18 +104,16 @@ const Card2 = ({
 
     const showCartUpdateOptions = (cartUpdate) =>
         cartUpdate && (
-            <div>
-                <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                        <span className="input-group-text">Adjust Quantity</span>
-                    </div>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={count}
-                        onChange={handleChange(product._id)}
-                    />
+            <div className="input-group mt-2 mb-2" style={{ maxWidth: "305px" }}>
+                <div className="input-group-prepend">
+                    <span className="input-group-text">Quantity</span>
                 </div>
+                <input
+                    type="number"
+                    className="form-control"
+                    value={count}
+                    onChange={handleChange(product._id)}
+                />
             </div>
         );
     return (
@@ -116,18 +130,38 @@ const Card2 = ({
                     <div className="mask rgba-white-slight"></div>
                 </Link>
             </div>
-            <div className="card-body text-center">
-                <h4 className="card-title">{product.name}</h4>
-                <p className="card-text">{product.description.substring(0, 100)}</p>
-                <p className="card-text">${product.price}</p>
-                <p className="card-text">Category: {product.category && product.category.name}</p>
-                <p className="card-text">Added on {moment(product.createdAt).fromNow()}</p>
-                <p className="card-text">{showStock(product.quantity)}</p>
+            <div className={`card-body ` + cardBodyClass}>
+                <h4 className={`card-title ` + cardBodyTitleClass} style={cardBodyTitleStyle}>
+                    {product.name}
+                </h4>
+                <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
+                    {product.description.substring(0, 100)}
+                </p>
+                <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
+                    ${product.price}
+                </p>
+                <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
+                    Category: {product.category && product.category.name}
+                </p>
+                <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
+                    Added on {moment(product.createdAt).fromNow()}
+                </p>
+                <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
+                    {showStock(product.quantity)}
+                </p>
                 <div className={groupBtnStyle}>
-                    {showViewButton(showViewProductButton, viewProductBtnStyle)}
-                    {showAddToCart(showAddToCartButton, addToCartBtnStyle)}
-                    {showRemoveButton(showRemoveProductButton, removeProductBtnStyle)}
                     {showCartUpdateOptions(cartUpdate)}
+                    {showViewButton(
+                        showViewProductButton,
+                        viewProductBtnClass,
+                        viewProductBtnStyle,
+                    )}
+                    {showAddToCart(showAddToCartButton, addToCartBtnClass, addToCartBtnStyle)}
+                    {showRemoveButton(
+                        showRemoveProductButton,
+                        removeProductBtnClass,
+                        removeProductBtnStyle,
+                    )}
                 </div>
             </div>
         </div>

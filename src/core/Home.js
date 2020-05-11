@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { getProducts } from "./apiCore";
-import Card from "./Card";
 import Card2 from "./Card2";
 import Search from "./Search";
 import { MDBRow } from "mdbreact";
@@ -50,39 +49,49 @@ const Home = () => {
                         <u>New Arrivals</u>
                     </h2>
                 </div>
-                <div className="d-flex flex-wrap align-content-center justify-content-center">
+                <div
+                    className="d-flex flex-wrap align-content-center justify-content-center"
+                    style={{ marginRight: "auto", marginLeft: "auto", maxWidth: "1700px" }}
+                >
                     {productsByArrival.map((product, i) => (
                         <Card2
                             key={i}
                             product={product}
                             cardClass="m-3"
-                            cardStyle={{ width: "400px", height: "750px" }}
-                            viewProductBtnStyle={{ fontSize: "small", width: "145px" }}
-                            addToCartBtnStyle={{ fontSize: "small", width: "145px" }}
-                            cardImgStyle={{ width: "100%", height: "450px" }}
-                            groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap pb-4"
+                            cardStyle={{ width: "320px", height: "670px" }}
+                            groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
+                            viewProductBtnClass="btn-sm btn-cyan rounded"
+                            viewProductBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                            addToCartBtnClass="btn-sm btn-pink rounded"
+                            addToCartBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                            cardImgStyle={{ width: "100%", height: "370px" }}
                         />
                     ))}
                 </div>
             </MDBRow>
 
-            <MDBRow style={{ backgroundColor: "#fff7f8" }}>
-                <div className="w-100 text-center">
+            <MDBRow style={{ backgroundColor: "#fff7f8" }} className="mb-2">
+                <div className="w-100 text-center mb-3">
                     <h2 className="mt-4 mb-4 font-weight-bold text-success">
                         <u>Best Sellers</u>
                     </h2>
                 </div>
-                <div className="d-flex flex-wrap align-content-center justify-content-center">
+                <div
+                    className="d-flex flex-wrap align-content-center justify-content-center"
+                    style={{ marginRight: "auto", marginLeft: "auto", maxWidth: "1700px" }}
+                >
                     {productsBySell.map((product, i) => (
                         <Card2
                             key={i}
                             product={product}
                             cardClass="m-3"
-                            cardStyle={{ width: "400px", height: "750px" }}
-                            viewProductBtnStyle={{ fontSize: "small", width: "145px" }}
-                            addToCartBtnStyle={{ fontSize: "small", width: "145px" }}
-                            cardImgStyle={{ width: "100%", height: "450px" }}
-                            groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap pb-4"
+                            cardStyle={{ width: "320px", height: "650px" }}
+                            groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
+                            viewProductBtnClass="btn-sm btn-cyan rounded"
+                            viewProductBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                            addToCartBtnClass="btn-sm btn-pink rounded"
+                            addToCartBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                            cardImgStyle={{ width: "100%", height: "370px" }}
                         />
                     ))}
                 </div>

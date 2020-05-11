@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
-import { getProducts, getCategories, getFilteredProducts } from "./apiCore";
-import Card from "./Card";
+import { getCategories, getFilteredProducts } from "./apiCore";
+import Card2 from "./Card2";
 import Checkbox from "./Checkbox";
 import RadioBox from "./RadioBox";
 import { prices } from "./fixedPrices";
@@ -60,8 +60,12 @@ const Shop = () => {
         return (
             size > 0 &&
             size >= limit && (
-                <button onClick={loadMore} className="btn btn-warning mb-5">
-                    Load more
+                <button
+                    onClick={loadMore}
+                    className="btn btn-success btn-sm"
+                    style={{ fontSize: "small", borderRadius: "20px", width: "100px" }}
+                >
+                    More
                 </button>
             )
         );
@@ -105,9 +109,14 @@ const Shop = () => {
             description="Search and find books of your choice"
             className="container-fluid"
         >
-            <div className="row">
-                <div className="col-4">
-                    <h4>Filter by categories</h4>
+            <div
+                className="row mt-4"
+                style={{ marginRight: "auto", marginLeft: "auto", maxWidth: "1700px" }}
+            >
+                <div className="col-2">
+                    <h5>
+                        <strong>Categories</strong>
+                    </h5>
                     <ul>
                         <Checkbox
                             categories={categories}
@@ -116,7 +125,9 @@ const Shop = () => {
                     </ul>
                     {/* {JSON.stringify(categories)} */}
 
-                    <h4>Filter by categories</h4>
+                    <h5>
+                        <strong>Price ranges</strong>
+                    </h5>
                     <div>
                         <RadioBox
                             prices={prices}
@@ -126,19 +137,29 @@ const Shop = () => {
                     {/* {JSON.stringify(prices)} */}
                 </div>
 
-                <div className="col-8">
-                    <h2 className="mb-4">Products</h2>
+                <div className="col-10">
+                    <h5>
+                        <strong>All Products</strong>
+                    </h5>
                     <div className="row">
                         {filterResults.map((product, i) => (
-                            <div key={i} className="col-4 mb-3">
-                                <Card product={product} />
-                            </div>
+                            <Card2
+                                key={i}
+                                product={product}
+                                cardClass="m-3"
+                                cardStyle={{ width: "320px", height: "650px" }}
+                                viewProductBtnClass="btn-sm btn-cyan rounded"
+                                viewProductBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                                addToCartBtnClass="btn-sm btn-pink rounded"
+                                addToCartBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                                cardImgStyle={{ width: "100%", height: "370px" }}
+                                groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
+                            />
                         ))}
                     </div>
                     {/* {JSON.stringify(myFilters)} */}
                     {/* {JSON.stringify(filterResults)} */}
-                    <hr />
-                    {loadMoreButton()}
+                    <div className="row mb-3 justify-content-center">{loadMoreButton()}</div>
                 </div>
             </div>
         </Layout>

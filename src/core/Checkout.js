@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { getBraintreeClientToken, processPayment, createOrder } from "./apiCore";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
@@ -43,11 +43,11 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
 
     const showCheckout = () =>
         isAuthenticated() ? (
-            <div>{showDropIn()}</div>
+            <Fragment>{showDropIn()}</Fragment>
         ) : (
-            <Link to="/signin">
-                <button className="btn btn-primary">Sign in to checkout</button>
-            </Link>
+            <div className="alert alert-info" role="alert">
+                Please <Link to="/shop">signin</Link> to proceed checkout!
+            </div>
         );
 
     let deliveryAddress = data.address;
@@ -109,9 +109,9 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     };
 
     const showDropIn = () => (
-        <div onBlur={() => setData({ ...data, error: "" })}>
+        <div onBlur={() => setData({ ...data, error: "" })} className="w-100">
             {data.clientToken !== null && products.length > 0 ? (
-                <div>
+                <Fragment>
                     <div className="form-group mb-3">
                         <label className="text-muted">Delivery address:</label>
                         <textarea
@@ -130,36 +130,56 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
                         }}
                         onInstance={(instance) => (data.instance = instance)}
                     />
-                    <button onClick={buy} className="btn btn-success btn-block">
+                    <button onClick={buy} className="btn btn-success rounded-circle">
                         Pay
                     </button>
-                </div>
+                </Fragment>
             ) : null}
         </div>
     );
 
     const showError = (error) => (
-        <div className="alert alert-danger" style={{ display: error ? "" : "none" }}>
-            {error}
+        <div className="alert alert-danger" role="alert" style={{ display: error ? "" : "none" }}>
+            <i className="fas fa-exclamation-circle fa-lg"></i> {error}
         </div>
     );
 
     const showSuccess = (success) => (
-        <div className="alert alert-info" style={{ display: success ? "" : "none" }}>
-            Thanks! Your payment was successful!
+        <div
+            className="alert alert-success"
+            role="alert"
+            style={{ display: success ? "" : "none" }}
+        >
+            <i className="far fa-check-circle fa-lg"></i> Payment Successful!{" "}
+            <Link to="/shop">Continue shopping!</Link>
         </div>
     );
 
-    const showLoading = (loading) => loading && <h2 className="text-danger">Loading...</h2>;
+    const showLoading = (loading) =>
+        loading && (
+            <div
+                className="spinner-border text-danger"
+                style={{ width: "100px", height: "100px" }}
+                role="status"
+            >
+                <span class="sr-only">Loading...</span>
+            </div>
+        );
     return (
-        <div>
-            {/* {JSON.stringify(products)} */}
-            <h2>Total: ${getTotal()}</h2>
-            {showLoading(data.loading)}
-            {showSuccess(data.success)}
-            {showError(data.error)}
-            {showCheckout()}
-        </div>
+        <Fragment>
+            <div className="row mb-2">
+                <h3>
+                    <u>Total:</u> <strong>${getTotal()}</strong>
+                </h3>
+            </div>
+            <div className="row">
+                {/* {JSON.stringify(products)} */}
+                {showLoading(data.loading)}
+                {showSuccess(data.success)}
+                {showError(data.error)}
+                {showCheckout()}
+            </div>
+        </Fragment>
     );
 };
 

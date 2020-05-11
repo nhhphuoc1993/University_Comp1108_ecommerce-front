@@ -2,20 +2,21 @@ import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { read, listRelated } from "./apiCore";
 import Card from "./Card";
+import Card2 from "./Card2";
 
-const Product = props => {
+const Product = (props) => {
     const [product, setProduct] = useState({});
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [error, setError] = useState({});
 
-    const loadSingleProduct = productId => {
-        read(productId).then(data => {
+    const loadSingleProduct = (productId) => {
+        read(productId).then((data) => {
             if (data.error) {
                 setError(data.error);
             } else {
                 setProduct(data);
                 // fetch related product
-                listRelated(data._id).then(data => {
+                listRelated(data._id).then((data) => {
                     if (data.error) {
                         setError(data.error);
                     } else {
@@ -40,19 +41,51 @@ const Product = props => {
             description={product && product.description && product.description.substring(0, 100)}
             className="container-fluid"
         >
-            <div className="row">
+            <div
+                className="row mt-4 mb-2"
+                style={{ marginRight: "auto", marginLeft: "auto", maxWidth: "1600px" }}
+            >
                 {/* {JSON.stringify(product)} */}
-                <div className="col-8">
+                <div className="col-9">
+                    <h3>
+                        <strong>Details</strong>
+                    </h3>
                     {product && product.description && (
-                        <Card product={product} showViewProductButton={false} />
+                        <Card2
+                            product={product}
+                            cardClass="mb-3 border-0"
+                            cardStyle={{ width: "320px", height: "650px" }}
+                            cardBodyClass="text-left"
+                            cardBodyTitleStyle={{ fontSize: "xx-large" }}
+                            cardBodyTextStyle={{ fontSize: "x-large" }}
+                            showViewProductButton={false}
+                            addToCartBtnClass="btn-lg btn-pink rounded"
+                            addToCartBtnStyle={{
+                                fontWeight: "bold",
+                                width: "175px",
+                                marginLeft: "0px",
+                            }}
+                            cardImgStyle={{ width: "100%", height: "370px" }}
+                        />
                     )}
                 </div>
-                <div className="col-4">
-                    <h4>Related products</h4>
-                    {relatedProducts.map((p, i) => (
-                        <div className="mb-3">
-                            <Card key={i} product={p} />
-                        </div>
+                <div className="col-3" style={{ paddingLeft: "60px" }}>
+                    <h3>
+                        <strong>Related Products</strong>
+                    </h3>
+                    {relatedProducts.map((product, i) => (
+                        <Card2
+                            key={i}
+                            product={product}
+                            cardClass="mb-3"
+                            cardStyle={{ width: "320px", height: "650px" }}
+                            viewProductBtnClass="btn-sm btn-cyan rounded"
+                            viewProductBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                            addToCartBtnClass="btn-sm btn-pink rounded"
+                            addToCartBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                            cardImgStyle={{ width: "100%", height: "370px" }}
+                            groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
+                        />
                     ))}
                 </div>
             </div>

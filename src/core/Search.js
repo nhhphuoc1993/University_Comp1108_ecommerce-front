@@ -51,28 +51,34 @@ const Search = () => {
 
     const searchMessage = (searched, results) => {
         if (searched && results.length > 0) {
-            return `Found ${results.length} products`;
+            return `Found ${results.length} products!`;
         }
         if (searched && results.length < 1) {
-            return `No products found`;
+            return `No product found!`;
         }
     };
 
     const searchedProducts = (results = []) => {
         return (
             <MDBRow>
-                <h2 className="mt-4">{searchMessage(searched, results)}</h2>
+                <div className="w-100 text-center">
+                    <h4>
+                        <em>{searchMessage(searched, results)}</em>
+                    </h4>
+                </div>
                 <div className="d-flex flex-wrap align-content-center justify-content-center">
                     {results.map((product, i) => (
                         <Card2
                             key={i}
                             product={product}
                             cardClass="m-3"
-                            cardStyle={{ width: "400px", height: "750px" }}
-                            viewProductBtnStyle={{ fontSize: "small", width: "145px" }}
-                            addToCartBtnStyle={{ fontSize: "small", width: "145px" }}
-                            cardImgStyle={{ width: "100%", height: "450px" }}
-                            groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap pb-4"
+                            cardStyle={{ width: "320px", height: "670px" }}
+                            viewProductBtnClass="btn-sm btn-cyan rounded"
+                            viewProductBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                            addToCartBtnClass="btn-sm btn-pink rounded"
+                            addToCartBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                            cardImgStyle={{ width: "100%", height: "370px" }}
+                            groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
                         />
                     ))}
                 </div>
@@ -122,14 +128,17 @@ const Search = () => {
     return (
         <MDBRow>
             <MDBContainer>{searchForm()}</MDBContainer>
-            <MDBContainer fluid>
+            <MDBContainer
+                fluid
+                style={{ marginRight: "auto", marginLeft: "auto", maxWidth: "1700px" }}
+            >
                 {results && results.length > 0 ? (
                     searchedProducts(results)
                 ) : (
                     <div className="text-center">
-                        <h5>
+                        <h4>
                             <em>Not find any product yet!</em>
-                        </h5>
+                        </h4>
                     </div>
                 )}
             </MDBContainer>
