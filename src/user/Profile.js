@@ -3,6 +3,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link, Redirect } from "react-router-dom";
 import { read, update, updateUser } from "./apiUser";
+import { MDBInput } from "mdbreact";
 
 const Profile = ({ match }) => {
     const [values, setValues] = useState({
@@ -16,9 +17,9 @@ const Profile = ({ match }) => {
     const { token } = isAuthenticated();
     const { name, email, password, error, success } = values;
 
-    const init = userId => {
+    const init = (userId) => {
         // console.log(userId);
-        read(userId, token).then(data => {
+        read(userId, token).then((data) => {
             if (data.error) {
                 setValues({ ...values, error: true });
             } else {
@@ -32,13 +33,13 @@ const Profile = ({ match }) => {
     }, []);
 
     // wrap name and then wrap the event
-    const handleChange = name => e => {
+    const handleChange = (name) => (e) => {
         setValues({ ...values, error: false, [name]: e.target.value });
     };
 
-    const clickSubmit = e => {
+    const clickSubmit = (e) => {
         e.preventDefault();
-        update(match.params.userId, token, { name, email, password }).then(data => {
+        update(match.params.userId, token, { name, email, password }).then((data) => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -49,51 +50,61 @@ const Profile = ({ match }) => {
         });
     };
 
-    const redirectUser = success => {
+    const redirectUser = (success) => {
         if (success) {
             return <Redirect to="/cart" />;
         }
     };
 
     const profileUpdate = (name, email, password) => (
-        <form>
-            <div className="form-group">
-                <label className="text-muted">Name</label>
+        <form className="text-center p-5 mx-auto" action="#!" style={{ maxWidth: "700px" }}>
+            <p className="h4 mb-4">Update profile</p>
+
+            <div className="form-group text-left">
+                <label>Name</label>
                 <input
-                    type="text"
+                    className="form-control mb-4"
+                    placeholder="Name"
                     onChange={handleChange("name")}
-                    className="form-control"
+                    type="text"
                     value={name}
                 />
             </div>
-            <div className="form-group">
-                <label className="text-muted">Email</label>
+
+            <div className="form-group text-left">
+                <label>Email</label>
                 <input
-                    type="text"
+                    className="form-control mb-4"
+                    placeholder="Email"
                     onChange={handleChange("email")}
-                    className="form-control"
+                    type="email"
                     value={email}
                 />
             </div>
-            <div className="form-group">
-                <label className="text-muted">Password</label>
+
+            <div className="form-group text-left">
+                <label>Password</label>
                 <input
-                    type="text"
+                    className="form-control mb-4"
+                    placeholder="Password"
                     onChange={handleChange("password")}
-                    className="form-control"
+                    type="password"
                     value={password}
                 />
             </div>
 
-            <button className="btn btn-primary" onClick={clickSubmit}>
-                Submit
+            <button onClick={clickSubmit} className="btn btn-info btn-block my-4" type="submit">
+                SUBMIT
             </button>
+
+            <p>
+                Back to <Link to="/user/dashboard">user dashboard</Link>
+            </p>
         </form>
     );
 
     return (
         <Layout title="Profile Page" description="Update your profile" className="container-fluid">
-            <h2 className="mb-4">Profile update</h2>
             {profileUpdate(name, email, password)}
             {redirectUser(success)}
             {/* {JSON.stringify(values)} */}
