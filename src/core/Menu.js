@@ -66,11 +66,13 @@ const Menu = ({ history }) => {
                                 <MDBIcon icon="user" className="fa-lg" />
                             </MDBDropdownToggle>
                             <MDBDropdownMenu right className="dropdown-default">
-                                {isAuthenticated() && isAuthenticated().user.role === 0 && (
-                                    <MDBDropdownItem href="/user/dashboard">
-                                        User dashboard
-                                    </MDBDropdownItem>
-                                )}
+                                {isAuthenticated() &&
+                                    (isAuthenticated().user.role === 0 ||
+                                        isAuthenticated().user.role === 1) && (
+                                        <MDBDropdownItem href="/user/dashboard">
+                                            User dashboard
+                                        </MDBDropdownItem>
+                                    )}
 
                                 {isAuthenticated() && isAuthenticated().user.role === 1 && (
                                     <MDBDropdownItem href="/admin/dashboard">

@@ -11,7 +11,7 @@ const AdminDashboard = () => {
     const adminLinks = () => {
         return (
             <div className="card">
-                <h4 className="card-header">User Links</h4>
+                <h4 className="card-header">Navigation</h4>
                 <ul className="list-group">
                     <li className="list-group-item">
                         <Link className="nav-link" to="/create/category">
@@ -40,19 +40,32 @@ const AdminDashboard = () => {
 
     const adminInfo = () => {
         return (
-            <div className="card mb-5">
-                <h3 className="card-header">User Information</h3>
+            <div className="card mb-4">
+                <h3 className="card-header">Profile</h3>
                 <ul className="list-group">
-                    <li className="list-group-item">{name}</li>
-                    <li className="list-group-item">{email}</li>
-                    <li className="list-group-item">{role === 1 ? "Admin" : "Registered User"}</li>
+                    <li className="list-group-item">
+                        <strong>Name: </strong>
+                        {name}
+                    </li>
+                    <li className="list-group-item">
+                        <strong>Email: </strong>
+                        {email}
+                    </li>
+                    <li className="list-group-item">
+                        <strong>Account type: </strong>
+                        {role === 1 ? "Admin" : "Normal user"}
+                    </li>
                 </ul>
             </div>
         );
     };
 
     return (
-        <Layout title="User Dashboard" description={`G'day ${name}!`} className="container-fluid">
+        <Layout
+            title="User Dashboard"
+            description={`G'day ${name}!`}
+            className="container-fluid my-4"
+        >
             <div className="row">
                 <div className="col-3">{adminLinks()}</div>
                 <div className="col-9">{adminInfo()}</div>
