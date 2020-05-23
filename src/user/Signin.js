@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import Layout from "../core/Layout";
 import { signin, authenticate, isAuthenticated } from "../auth";
 
@@ -17,15 +17,15 @@ const Signin = () => {
     const { user } = isAuthenticated();
 
     // higher order function: function return a function
-    const handleChange = name => event => {
+    const handleChange = (name) => (event) => {
         setValues({ ...values, error: false, [name]: event.target.value });
     };
 
-    const clickSubmit = event => {
+    const clickSubmit = (event) => {
         // prevent the browser reload
         event.preventDefault();
         setValues({ ...values, error: false, loading: true });
-        signin({ email, password }).then(data => {
+        signin({ email, password }).then((data) => {
             if (data.error) {
                 setValues({ ...values, error: data.error, loading: false });
             } else {
@@ -41,43 +41,55 @@ const Signin = () => {
     };
 
     const singinForm = () => (
-        <form>
-            <div className="form-group">
-                <label className="text-muted">Email</label>
-                <input
-                    onChange={handleChange("email")}
-                    type="email"
-                    className="form-control"
-                    value={email}
-                />
-            </div>
+        <form className="text-center p-5 mx-auto" action="#!" style={{ maxWidth: "700px" }}>
+            <p className="h4 mb-4">Sign in</p>
 
-            <div className="form-group">
-                <label className="text-muted">Password</label>
-                <input
-                    onChange={handleChange("password")}
-                    type="password"
-                    className="form-control"
-                    value={password}
-                />
-            </div>
-            <button onClick={clickSubmit} className="btn btn-primary">
-                Submit
+            <input
+                onChange={handleChange("email")}
+                type="email"
+                className="form-control mb-4"
+                placeholder="Email"
+                value={email}
+            />
+
+            <input
+                type="password"
+                className="form-control mb-4"
+                placeholder="Password"
+                onChange={handleChange("password")}
+                value={password}
+            />
+
+            <button onClick={clickSubmit} className="btn btn-info btn-block my-4" type="submit">
+                Sign in
             </button>
+
+            <p>
+                Not a member? <Link to="/signup">Register</Link>
+            </p>
         </form>
     );
 
     // use 2 brackets: https://stackoverflow.com/questions/47950833/react-why-is-double-brace-syntax-style-required-for-inline-styles
-    const showError = () => (
-        <div className="alert alert-danger" style={{ display: error ? "" : "none" }}>
-            {error}
+    const showError = (error) => (
+        <div
+            className="alert alert-danger mt-5 mx-auto"
+            style={{ display: error ? "" : "none", maxWidth: "700px" }}
+        >
+            <i className="fas fa-exclamation-circle"></i> {error}
         </div>
     );
 
-    const showLoading = () =>
+    const showLoading = (loading) =>
         loading && (
-            <div className="alert alert-info">
-                <h2>Loading...</h2>
+            <div className="d-flex justify-content-center mt-5">
+                <div
+                    className="spinner-border text-danger fast"
+                    role="status"
+                    style={{ width: "5rem", height: "5rem" }}
+                >
+                    <span className="sr-only">Loading...</span>
+                </div>
             </div>
         );
 
@@ -101,8 +113,8 @@ const Signin = () => {
             description="Signin to Node React Ecommerce App"
             className="container col-md-8 offset-md-2"
         >
-            {showLoading()}
-            {showError()}
+            {showLoading(loading)}
+            {showError(error)}
             {singinForm()}
             {redirectUser()}
             {/* {JSON.stringify(values)} */}
