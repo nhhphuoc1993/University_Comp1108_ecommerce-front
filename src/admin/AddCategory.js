@@ -12,17 +12,17 @@ const AddCategory = () => {
     // destructure user and info from localstorage
     const { user, token } = isAuthenticated();
 
-    const handleChange = e => {
+    const handleChange = (e) => {
         setError("");
         setName(e.target.value);
     };
 
-    const clickSubmit = e => {
+    const clickSubmit = (e) => {
         e.preventDefault();
         setError("");
         setSuccess(false);
         // make request to api to create category
-        createCategory(user._id, token, { name }).then(data => {
+        createCategory(user._id, token, { name }).then((data) => {
             if (data.error) {
                 setError(true);
             } else {
@@ -33,38 +33,48 @@ const AddCategory = () => {
     };
 
     const newCategoryForm = () => (
-        <form onSubmit={clickSubmit}>
-            <div className="form-group">
-                <label className="text-muted">Name</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    onChange={handleChange}
-                    value={name}
-                    autoFocus
-                />
-            </div>
-            <button className="btn btn-outline-primary">Create Category</button>
+        <form
+            className="text-center p-5 mx-auto"
+            action="#!"
+            style={{ maxWidth: "700px" }}
+            onSubmit={clickSubmit}
+        >
+            <p className="h4 mb-4">Create category</p>
+
+            <input
+                className="form-control mb-4"
+                placeholder="Category name"
+                onChange={handleChange}
+                type="text"
+                value={name}
+                autoFocus
+            />
+
+            <button className="btn btn-info btn-block my-4" type="submit">
+                SUBMIT
+            </button>
+
+            <p>
+                Back to <Link to="/admin/dashboard">admin dashboard</Link>
+            </p>
         </form>
     );
 
-    const showSuccess = () => {
-        if (success) {
-            return <h3 className="text-success">{name} is created</h3>;
-        }
-    };
+    const showError = (error) => (
+        <div
+            className="alert alert-danger mt-5 mx-auto"
+            style={{ display: error ? "" : "none", maxWidth: "700px" }}
+        >
+            <i className="fas fa-exclamation-circle"></i> Category should be unique!
+        </div>
+    );
 
-    const showError = () => {
-        if (error) {
-            return <h3 className="text-danger">Category should be unique</h3>;
-        }
-    };
-
-    const goBack = () => (
-        <div className="mt-5">
-            <Link to="/admin/dashboard" className="text-warning">
-                Back to Dashboard
-            </Link>
+    const showSuccess = (success) => (
+        <div
+            className="alert alert-info mt-5 mx-auto"
+            style={{ display: success ? "" : "none", maxWidth: "700px" }}
+        >
+            <i className="fas fa-check-circle"></i> {name} is created!
         </div>
     );
 
@@ -72,15 +82,11 @@ const AddCategory = () => {
         <Layout
             title="Add a new category"
             description={`G'day ${user.name}, ready to add a new category`}
+            className="container col-md-8 offset-md-2"
         >
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    {showSuccess()}
-                    {showError()}
-                    {newCategoryForm()}
-                    {goBack()}
-                </div>
-            </div>
+            {showSuccess(success)}
+            {showError(error)}
+            {newCategoryForm()}
         </Layout>
     );
 };
