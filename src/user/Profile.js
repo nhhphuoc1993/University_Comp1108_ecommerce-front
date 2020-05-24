@@ -94,7 +94,7 @@ const Profile = ({ match }) => {
             </div>
 
             <button onClick={clickSubmit} className="btn btn-info btn-block my-4" type="submit">
-                SUBMIT
+                UPDATE
             </button>
 
             <p>

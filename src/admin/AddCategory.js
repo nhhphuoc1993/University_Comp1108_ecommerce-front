@@ -43,7 +43,7 @@ const AddCategory = () => {
 
             <input
                 className="form-control mb-4"
-                placeholder="Category name"
+                placeholder="Name"
                 onChange={handleChange}
                 type="text"
                 value={name}
@@ -51,7 +51,7 @@ const AddCategory = () => {
             />
 
             <button className="btn btn-info btn-block my-4" type="submit">
-                SUBMIT
+                CREATE
             </button>
 
             <p>
