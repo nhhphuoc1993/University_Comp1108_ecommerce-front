@@ -192,14 +192,10 @@ const AddProduct = () => {
             title="Add a new product"
             description={`G'day ${user.name}, ready to add a new product`}
         >
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    {showLoading(loading)}
-                    {showSuccess(createdProduct)}
-                    {showError(error)}
-                    {newPostForm()}
-                </div>
-            </div>
+            {showLoading(loading)}
+            {showSuccess(createdProduct)}
+            {showError(error)}
+            {newPostForm()}
         </Layout>
     );
 };

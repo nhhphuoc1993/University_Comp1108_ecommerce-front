@@ -96,7 +96,7 @@ const UserDashboard = () => {
                                     </h6>
                                     <h6>
                                         <strong>Delivery address: </strong>
-                                        {h.address ? h.address : h.address}
+                                        {h.address ? h.address : <i>Default buyer address</i>}
                                     </h6>
                                     <div class="accordion" id={"puchasedItemsAccordion_" + i}>
                                         <div class="card z-depth-0 bordered">

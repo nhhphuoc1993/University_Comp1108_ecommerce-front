@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { isAuthenticated } from "../auth";
 import Layout from "../core/Layout";
 import { listOrders, getStatusValues, updateOrderStatus } from "./apiAdmin";
@@ -37,20 +37,13 @@ const Orders = () => {
 
     const showOrdersLength = () => {
         if (orders.length > 0) {
-            return <h1 className="text-danger display-2">Total orders: {orders.length}</h1>;
+            return (
+                <h2 className="text-danger display-4 text-center">Total orders: {orders.length}</h2>
+            );
         } else {
-            return <h1 className="text-danger">No orders</h1>;
+            return <h2 className="text-danger display-4 text-center">No order!</h2>;
         }
     };
-
-    const showInput = (key, value) => (
-        <div className="input-group mb-2 mr-sm-2">
-            <div className="input-group-prepend">
-                <div className="input-group-text">{key}</div>
-            </div>
-            <input type="text" value={value} className="form-control" readOnly />
-        </div>
-    );
 
     const handleStatusChange = (event, orderId) => {
         updateOrderStatus(user._id, token, orderId, event.target.value).then((data) => {
@@ -63,10 +56,15 @@ const Orders = () => {
     };
 
     const showStatus = (o) => (
-        <div className="form-group">
-            <h3 className="mark mb-4">Status: {o.status}</h3>
-            <select className="form-control" onChange={(e) => handleStatusChange(e, o._id)}>
-                <option>Update Status</option>
+        <div className="form-group mb-0">
+            <h5>
+                <strong>Status:</strong> <span className="spring-warmth-gradient">{o.status} </span>
+            </h5>
+            <select
+                className="form-control custom-select"
+                onChange={(e) => handleStatusChange(e, o._id)}
+            >
+                <option>Update order status</option>
                 {statusValues.map((status, index) => (
                     <option key={index} value={status}>
                         {status}
@@ -80,61 +78,154 @@ const Orders = () => {
         <Layout
             title="Orders"
             description={`G'day ${user.name}, you can manage all the orders here`}
-            className="container-fluid"
+            className="col-8 mx-auto my-5"
         >
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    {showOrdersLength()}
-                    {orders.map((o, oIndex) => {
-                        return (
-                            <div
-                                className="mt-5"
-                                key={oIndex}
-                                style={{ borderBottom: "5px solid indigo" }}
-                            >
-                                <h2 className="mb-5">
-                                    <span className="bg-primary">Order ID: {o._id}</span>
-                                </h2>
-                                <ul className="list-group mb-2">
-                                    <li className="list-group-item">
-                                        {/* {o.status} */}
-                                        {showStatus(o)}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Transaction ID: {o.transaction_id}
-                                    </li>
-                                    <li className="list-group-item">Amount: ${o.amount}</li>
-                                    <li className="list-group-item">Ordered by: {o.user.name}</li>
-                                    <li className="list-group-item">
-                                        Ordered on: {moment(o.createdAt).fromNow()}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Delivery address: {o.address}
-                                    </li>
-                                </ul>
-
-                                <h3 className="mt-4 mb-4 font-italic">
-                                    Total products in the order: {o.products.length}
-                                </h3>
-
-                                {o.products.map((p, pIndex) => (
-                                    <div
-                                        className="mb-4"
-                                        key={pIndex}
-                                        style={{ padding: "20px", border: "1px solid indigo" }}
-                                    >
-                                        {showInput("Product name", p.name)}
-                                        {showInput("Product price", p.price)}
-                                        {showInput("Product total", p.count)}
-                                        {showInput("Product Id", p._id)}
+            {/* {JSON.stringify(orders)} */}
+            {showOrdersLength()}
+            {orders.map((o, oIndex) => {
+                return (
+                    <div key={oIndex}>
+                        <hr className="my-4" style={{ border: "0.5px solid red" }} />
+                        <h2>
+                            <strong>Order ID:</strong> {o._id} <strong>-</strong>{" "}
+                            {moment(o.createdAt).fromNow()}
+                        </h2>
+                        <ul className="list-group">
+                            <li className="list-group-item" style={{ borderBottom: "none" }}>
+                                {showStatus(o)}
+                            </li>
+                            <li className="list-group-item py-0" style={{ borderBottom: "none" }}>
+                                <div class="accordion" id={"orderDetailsAccordion_" + oIndex}>
+                                    <div class="card z-depth-0 bordered">
+                                        <div
+                                            class="card-header cloudy-knoxville-gradient"
+                                            id={"orderDetailsAccordion_" + oIndex + "_headingOne"}
+                                        >
+                                            <h5 class="mb-0">
+                                                <button
+                                                    class="btn btn-link btn-block text-left p-0"
+                                                    style={{ fontSize: "medium" }}
+                                                    type="button"
+                                                    data-toggle="collapse"
+                                                    data-target={
+                                                        "#orderDetailsAccordion_" +
+                                                        oIndex +
+                                                        "_collapseOne"
+                                                    }
+                                                    aria-expanded="true"
+                                                    aria-controls="collapseOne"
+                                                >
+                                                    Details
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div
+                                            id={"orderDetailsAccordion_" + oIndex + "_collapseOne"}
+                                            class="collapse show"
+                                            aria-labelledby={
+                                                "orderDetailsAccordion_" + oIndex + "_headingOne"
+                                            }
+                                            data-parent={"#orderDetailsAccordion_" + oIndex}
+                                        >
+                                            <div class="card-body">
+                                                {o.products.map((p, pIndex) => {
+                                                    return (
+                                                        <div key={pIndex}>
+                                                            {pIndex > 0 && <hr />}
+                                                            <h5>
+                                                                <strong>Ordered by:</strong>{" "}
+                                                                {o.user.name}
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>Total price:</strong> $
+                                                                {o.amount}
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>Delivery address:</strong>{" "}
+                                                                {o.address ? (
+                                                                    o.address
+                                                                ) : (
+                                                                    <i>Default buyer address</i>
+                                                                )}
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>Transaction ID:</strong>{" "}
+                                                                {o.transaction_id}
+                                                            </h5>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
-                        );
-                    })}
-                    {/* {JSON.stringify(orders)} */}
-                </div>
-            </div>
+                                </div>
+                            </li>
+                            <li className="list-group-item">
+                                <div class="accordion" id={"puchasedItemsAccordion_" + oIndex}>
+                                    <div class="card z-depth-0 bordered">
+                                        <div
+                                            class="card-header cloudy-knoxville-gradient"
+                                            id={"puchasedItemsAccordion_" + oIndex + "_headingOne"}
+                                        >
+                                            <h5 class="mb-0">
+                                                <button
+                                                    class="btn btn-link btn-block text-left p-0"
+                                                    style={{ fontSize: "medium" }}
+                                                    type="button"
+                                                    data-toggle="collapse"
+                                                    data-target={
+                                                        "#puchasedItemsAccordion_" +
+                                                        oIndex +
+                                                        "_collapseOne"
+                                                    }
+                                                    aria-expanded="true"
+                                                    aria-controls="collapseOne"
+                                                >
+                                                    {o.products.length} products
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div
+                                            id={"puchasedItemsAccordion_" + oIndex + "_collapseOne"}
+                                            class="collapse show"
+                                            aria-labelledby={
+                                                "puchasedItemsAccordion_" + oIndex + "_headingOne"
+                                            }
+                                            data-parent={"#puchasedItemsAccordion_" + oIndex}
+                                        >
+                                            <div class="card-body">
+                                                {o.products.map((p, pIndex) => {
+                                                    return (
+                                                        <div key={pIndex}>
+                                                            {pIndex > 0 && <hr />}
+                                                            <h5>
+                                                                <strong>ID: </strong>
+                                                                {p._id}
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>Name: </strong>
+                                                                {p.name}
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>Single price: </strong>$
+                                                                {p.price}
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>Bought quantity: </strong>$
+                                                                {p.count}
+                                                            </h5>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                );
+            })}
         </Layout>
     );
 };

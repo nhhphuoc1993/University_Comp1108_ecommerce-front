@@ -82,7 +82,6 @@ const AddCategory = () => {
         <Layout
             title="Add a new category"
             description={`G'day ${user.name}, ready to add a new category`}
-            className="container col-md-8 offset-md-2"
         >
             {showSuccess(success)}
             {showError(error)}
