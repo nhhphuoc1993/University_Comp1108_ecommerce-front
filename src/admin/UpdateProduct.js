@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link, Redirect } from "react-router-dom";
@@ -127,100 +127,104 @@ const UpdateProduct = ({ match }) => {
     };
 
     const newPostForm = () => (
-        <form className="mb-3" onSubmit={clickSubmit}>
-            <h4>Post Photo</h4>
-            <div className="form-group">
-                <label className="btn btn-secondary">
-                    <input
-                        onChange={handleChange("photo")}
-                        type="file"
-                        name="photo"
-                        accept="image/*"
-                    />
-                </label>
+        <form
+            className="text-center p-5 mx-auto"
+            action="#!"
+            style={{ maxWidth: "700px" }}
+            onSubmit={clickSubmit}
+        >
+            <p className="h4 mb-4">Create product</p>
+
+            <div class="input-group mb-4">
+                <label className="my-auto mr-2">Image</label>
+                <input onChange={handleChange("photo")} type="file" name="photo" accept="image/*" />
             </div>
 
-            <div className="form-group">
-                <label className="text-muted">Name</label>
-                <input
-                    onChange={handleChange("name")}
-                    type="text"
-                    className="form-control"
-                    value={name}
-                />
-            </div>
+            <input
+                className="form-control mb-4"
+                placeholder="Name"
+                onChange={handleChange("name")}
+                type="text"
+                value={name}
+            />
 
-            <div className="form-group">
-                <label className="text-muted">Description</label>
-                <textarea
-                    onChange={handleChange("description")}
-                    className="form-control"
-                    value={description}
-                />
-            </div>
+            <textarea
+                onChange={handleChange("description")}
+                placeholder="Descriptiopn"
+                className="form-control mb-4"
+                value={description}
+            />
 
-            <div className="form-group">
-                <label className="text-muted">Price</label>
-                <input
-                    onChange={handleChange("price")}
-                    type="number"
-                    className="form-control"
-                    value={price}
-                />
-            </div>
+            <input
+                className="form-control mb-4"
+                placeholder="Price"
+                onChange={handleChange("price")}
+                type="number"
+                value={price}
+            />
 
-            <div className="form-group">
-                <label className="text-muted">Category</label>
-                <select onChange={handleChange("category")} className="form-control">
-                    <option>Please select</option>
-                    {categories &&
-                        categories.map((cat, index) => (
-                            <option key={index} value={cat._id}>
-                                {cat.name}
-                            </option>
-                        ))}
-                </select>
-            </div>
+            <select onChange={handleChange("category")} className="form-control custom-select mb-4">
+                <option>Select category</option>
+                {categories &&
+                    categories.map((cat, index) => (
+                        <option key={index} value={cat._id}>
+                            {cat.name}
+                        </option>
+                    ))}
+            </select>
 
-            <div className="form-group">
-                <label className="text-muted">Shipping</label>
-                <select onChange={handleChange("shipping")} className="form-control">
-                    <option>Please select</option>
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
+            <select onChange={handleChange("shipping")} className="form-control custom-select mb-4">
+                <option>Select shipping</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
 
-            <div className="form-group">
-                <label className="text-muted">Quantity</label>
-                <input
-                    onChange={handleChange("quantity")}
-                    type="number"
-                    className="form-control"
-                    value={quantity}
-                />
-            </div>
+            <input
+                onChange={handleChange("quantity")}
+                type="number"
+                className="form-control custom-select mb-4"
+                placeholder="Purchased quantity"
+                value={quantity}
+            />
 
-            <button className="btn btn-outline-primary">Update Product</button>
+            <button className="btn btn-info btn-block my-4" type="submit">
+                UPDATE
+            </button>
+
+            <p>
+                Back to <Link to="/admin/dashboard">admin dashboard</Link>
+            </p>
         </form>
     );
 
-    const showError = () => (
-        <div className="alert alert-danger" style={{ display: error ? "" : "none" }}>
-            {error}
+    const showError = (error) => (
+        <div
+            className="alert alert-danger mt-5 mx-auto"
+            style={{ display: error ? "" : "none", maxWidth: "700px" }}
+        >
+            <i className="fas fa-exclamation-circle"></i> {error}
         </div>
     );
 
-    const showSuccess = () => (
-        <div className="alert alert-info" style={{ display: createdProduct ? "" : "none" }}>
-            <h2>{`${createdProduct} is updated!`}</h2>
+    const showSuccess = (createdProduct) => (
+        <div
+            className="alert alert-info mt-5 mx-auto"
+            style={{ display: createdProduct ? "" : "none", maxWidth: "700px" }}
+        >
+            <i className="fas fa-check-circle"></i> {`${createdProduct} is created successfully!`}
         </div>
     );
 
-    const showLoading = () =>
+    const showLoading = (loading) =>
         loading && (
-            <div className="alert alert-success">
-                <h2>Loading...</h2>
+            <div className="d-flex justify-content-center mt-5">
+                <div
+                    className="spinner-border text-danger fast"
+                    role="status"
+                    style={{ width: "5rem", height: "5rem" }}
+                >
+                    <span className="sr-only">Loading...</span>
+                </div>
             </div>
         );
 
@@ -237,15 +241,11 @@ const UpdateProduct = ({ match }) => {
             title="Add a new product"
             description={`G'day ${user.name}, ready to add a new product`}
         >
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    {showLoading()}
-                    {showSuccess()}
-                    {showError()}
-                    {newPostForm()}
-                    {redirectUser()}
-                </div>
-            </div>
+            {showLoading(loading)}
+            {showSuccess(createdProduct)}
+            {showError(error)}
+            {newPostForm()}
+            {redirectUser()}
         </Layout>
     );
 };
