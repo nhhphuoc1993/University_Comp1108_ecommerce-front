@@ -9,7 +9,7 @@ const UserDashboard = () => {
     const [history, setHistory] = useState([]);
 
     const {
-        user: { _id, name, email, role },
+        user: { _id, name, email, role, address },
         token,
     } = isAuthenticated();
     // const token = isAuthenticated().token;
@@ -64,6 +64,10 @@ const UserDashboard = () => {
                         <strong>Account type: </strong>
                         {role === 1 ? "Admin" : "Normal user"}
                     </li>
+                    <li className="list-group-item">
+                        <strong>Address: </strong>
+                        {address}
+                    </li>
                 </ul>
             </div>
         );
@@ -96,7 +100,7 @@ const UserDashboard = () => {
                                     </h6>
                                     <h6>
                                         <strong>Delivery address: </strong>
-                                        {h.address ? h.address : <i>Default buyer address</i>}
+                                        {h.address ? h.address : "N/A"}
                                     </h6>
                                     <div class="accordion" id={"puchasedItemsAccordion_" + i}>
                                         <div class="card z-depth-0 bordered">

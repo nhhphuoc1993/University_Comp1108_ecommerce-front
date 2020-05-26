@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const AdminDashboard = () => {
     const {
-        user: { _id, name, email, role },
+        user: { _id, name, email, role, address },
     } = isAuthenticated();
 
     const adminLinks = () => {
@@ -54,6 +54,10 @@ const AdminDashboard = () => {
                     <li className="list-group-item">
                         <strong>Account type: </strong>
                         {role === 1 ? "Admin" : "Normal user"}
+                    </li>
+                    <li className="list-group-item">
+                        <strong>Address: </strong>
+                        {address}
                     </li>
                 </ul>
             </div>

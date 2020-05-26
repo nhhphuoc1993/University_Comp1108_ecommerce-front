@@ -8,12 +8,13 @@ const Signup = () => {
         name: "",
         email: "",
         password: "",
+        address: "",
         error: "",
         success: false,
     });
 
     // destruct values to get necessary fields
-    const { name, email, password, success, error } = values;
+    const { name, email, password, address, success, error } = values;
 
     // higher order function: function return a function
     const handleChange = (name) => (event) => {
@@ -24,7 +25,7 @@ const Signup = () => {
         // prevent the browser reload
         event.preventDefault();
         setValues({ ...values, error: false });
-        signup({ name, email, password }).then((data) => {
+        signup({ name, email, password, address }).then((data) => {
             if (data.error) {
                 setValues({ ...values, error: data.error, success: false });
             } else {
@@ -33,6 +34,7 @@ const Signup = () => {
                     name: "",
                     email: "",
                     password: "",
+                    address: "",
                     error: "",
                     success: true,
                 });
@@ -66,6 +68,14 @@ const Signup = () => {
                 onChange={handleChange("password")}
                 type="password"
                 value={password}
+            />
+
+            <input
+                className="form-control mb-4"
+                placeholder="Address"
+                onChange={handleChange("address")}
+                type="text"
+                value={address}
             />
 
             <button onClick={clickSubmit} className="btn btn-info btn-block my-4" type="submit">
