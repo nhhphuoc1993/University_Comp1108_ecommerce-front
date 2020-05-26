@@ -147,25 +147,31 @@ const Shop = () => {
                         <strong>All Products</strong>
                     </h5>
                     <div className="row">
-                        {filterResults.map((product, i) => (
-                            <Card2
-                                key={i}
-                                product={product}
-                                cardClass="m-3"
-                                cardStyle={{ width: "320px", height: "625px" }}
-                                groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
-                                viewProductBtnClass="btn-sm btn-cyan rounded"
-                                viewProductBtnStyle={{ fontWeight: "bold", width: "125px" }}
-                                addToCartBtnClass="btn-sm btn-pink rounded"
-                                addToCartBtnStyle={{ fontWeight: "bold", width: "125px" }}
-                                cardImgStyle={{ width: "100%", height: "400px" }}
-                                cardBodyTextStyle={{ fontSize: "20px" }}
-                                cardBodyTitleStyle={{ height: "55px" }}
-                                showDescription={false}
-                                showCategory={false}
-                                showAddedOn={false}
-                            />
-                        ))}
+                        {filterResults.length > 0 ? (
+                            filterResults.map((product, i) => (
+                                <Card2
+                                    key={i}
+                                    product={product}
+                                    cardClass="m-3"
+                                    cardStyle={{ width: "320px", height: "625px" }}
+                                    groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
+                                    viewProductBtnClass="btn-sm btn-cyan rounded"
+                                    viewProductBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                                    addToCartBtnClass="btn-sm btn-pink rounded"
+                                    addToCartBtnStyle={{ fontWeight: "bold", width: "125px" }}
+                                    cardImgStyle={{ width: "100%", height: "400px" }}
+                                    cardBodyTextStyle={{ fontSize: "20px" }}
+                                    cardBodyTitleStyle={{ height: "55px" }}
+                                    showDescription={false}
+                                    showCategory={false}
+                                    showAddedOn={false}
+                                />
+                            ))
+                        ) : (
+                            <h4 style={{ paddingLeft: "15px" }}>
+                                <em>Not find any product yet!</em>
+                            </h4>
+                        )}
                     </div>
                     {/* {JSON.stringify(myFilters)} */}
                     {/* {JSON.stringify(filterResults)} */}

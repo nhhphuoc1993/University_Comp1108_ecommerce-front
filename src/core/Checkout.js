@@ -4,6 +4,7 @@ import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import DropIn from "braintree-web-drop-in-react";
 import { emptyCart } from "./cartHelpers";
+import { MDBInput } from "mdbreact";
 
 const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     const [data, setData] = useState({
@@ -114,12 +115,13 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
             {data.clientToken !== null && products.length > 0 ? (
                 <Fragment>
                     <div className="form-group mb-3">
-                        <label className="text-muted">Delivery address:</label>
-                        <textarea
+                        <MDBInput
+                            type="textarea"
+                            label="Delivery address"
+                            rows="2"
                             onChange={handleAddress}
                             className="form-control"
                             value={data.address}
-                            placeholder="Type your delivery address here..."
                         />
                     </div>
                     <DropIn

@@ -3,10 +3,11 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { createCategory } from "./apiAdmin";
+import { MDBInput } from "mdbreact";
 
 const AddCategory = () => {
     const [name, setName] = useState("");
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
 
     // destructure user and info from localstorage
@@ -14,6 +15,7 @@ const AddCategory = () => {
 
     const handleChange = (e) => {
         setError("");
+        setSuccess(false);
         setName(e.target.value);
     };
 
@@ -41,9 +43,9 @@ const AddCategory = () => {
         >
             <p className="h4 mb-4">Create category</p>
 
-            <input
+            <MDBInput
+                label="Name"
                 className="form-control mb-4"
-                placeholder="Name"
                 onChange={handleChange}
                 type="text"
                 value={name}

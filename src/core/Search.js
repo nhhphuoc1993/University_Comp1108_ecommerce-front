@@ -66,7 +66,7 @@ const Search = () => {
                         <em>{searchMessage(searched, results)}</em>
                     </h4>
                 </div>
-                <div className="d-flex flex-wrap align-content-center justify-content-center">
+                <div className="w-100 d-flex flex-wrap align-content-center justify-content-center">
                     {results.map((product, i) => (
                         <Card2
                             key={i}
