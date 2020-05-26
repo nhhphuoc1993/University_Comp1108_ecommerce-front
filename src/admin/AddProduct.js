@@ -94,7 +94,7 @@ const AddProduct = () => {
         >
             <p className="h4 mb-4">Create product</p>
 
-            <div class="input-group mb-4">
+            <div className="input-group mb-4">
                 <label className="my-auto mr-2">Image</label>
                 <input onChange={handleChange("photo")} type="file" name="photo" accept="image/*" />
             </div>
@@ -141,8 +141,8 @@ const AddProduct = () => {
             <input
                 onChange={handleChange("quantity")}
                 type="number"
-                className="form-control custom-select mb-4"
-                placeholder="Purchased quantity"
+                className="form-control mb-4"
+                placeholder="Quantity"
                 value={quantity}
             />
 

@@ -10,7 +10,7 @@ const Profile = ({ match }) => {
         name: "",
         email: "",
         password: "",
-        error: false,
+        error: "",
         success: false,
     });
 
@@ -21,7 +21,7 @@ const Profile = ({ match }) => {
         // console.log(userId);
         read(userId, token).then((data) => {
             if (data.error) {
-                setValues({ ...values, error: true });
+                setValues({ ...values, error: "" });
             } else {
                 setValues({ ...values, name: data.name, email: data.email });
             }
@@ -34,7 +34,7 @@ const Profile = ({ match }) => {
 
     // wrap name and then wrap the event
     const handleChange = (name) => (e) => {
-        setValues({ ...values, error: false, [name]: e.target.value });
+        setValues({ ...values, error: "", [name]: e.target.value });
     };
 
     const clickSubmit = (e) => {
@@ -42,6 +42,7 @@ const Profile = ({ match }) => {
         update(match.params.userId, token, { name, email, password }).then((data) => {
             if (data.error) {
                 console.log(data.error);
+                setValues({ ...values, error: data.error, success: false });
             } else {
                 updateUser(data, () => {
                     setValues({ ...values, name: data.name, email: data.email, success: true });
@@ -52,7 +53,7 @@ const Profile = ({ match }) => {
 
     const redirectUser = (success) => {
         if (success) {
-            return <Redirect to="/cart" />;
+            return <Redirect to="/user/dashboard" />;
         }
     };
 
@@ -79,6 +80,7 @@ const Profile = ({ match }) => {
                     onChange={handleChange("email")}
                     type="email"
                     value={email}
+                    disabled
                 />
             </div>
 
@@ -86,7 +88,7 @@ const Profile = ({ match }) => {
                 <label>Password</label>
                 <input
                     className="form-control mb-4"
-                    placeholder="Password"
+                    placeholder="New password"
                     onChange={handleChange("password")}
                     type="password"
                     value={password}
@@ -103,8 +105,18 @@ const Profile = ({ match }) => {
         </form>
     );
 
+    const showError = (error) => (
+        <div
+            className="alert alert-danger mt-5 mx-auto"
+            style={{ display: error ? "" : "none", maxWidth: "700px" }}
+        >
+            <i className="fas fa-exclamation-circle"></i> {error}
+        </div>
+    );
+
     return (
         <Layout title="Profile Page" description="Update your profile" className="container-fluid">
+            {showError(error)}
             {profileUpdate(name, email, password)}
             {redirectUser(success)}
             {/* {JSON.stringify(values)} */}

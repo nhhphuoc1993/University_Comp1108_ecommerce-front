@@ -62,8 +62,13 @@ const Shop = () => {
             size >= limit && (
                 <button
                     onClick={loadMore}
-                    className="btn btn-success btn-sm"
-                    style={{ fontSize: "small", borderRadius: "20px", width: "100px" }}
+                    className="btn btn-warning btn-sm"
+                    style={{
+                        fontSize: "small",
+                        fontWeight: "bold",
+                        borderRadius: "20px",
+                        width: "100px",
+                    }}
                 >
                     More
                 </button>
@@ -147,13 +152,18 @@ const Shop = () => {
                                 key={i}
                                 product={product}
                                 cardClass="m-3"
-                                cardStyle={{ width: "320px", height: "650px" }}
+                                cardStyle={{ width: "320px", height: "625px" }}
+                                groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
                                 viewProductBtnClass="btn-sm btn-cyan rounded"
                                 viewProductBtnStyle={{ fontWeight: "bold", width: "125px" }}
                                 addToCartBtnClass="btn-sm btn-pink rounded"
                                 addToCartBtnStyle={{ fontWeight: "bold", width: "125px" }}
-                                cardImgStyle={{ width: "100%", height: "370px" }}
-                                groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
+                                cardImgStyle={{ width: "100%", height: "400px" }}
+                                cardBodyTextStyle={{ fontSize: "20px" }}
+                                cardBodyTitleStyle={{ height: "55px" }}
+                                showDescription={false}
+                                showCategory={false}
+                                showAddedOn={false}
                             />
                         ))}
                     </div>
