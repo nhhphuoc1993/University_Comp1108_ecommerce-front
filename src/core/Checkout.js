@@ -15,6 +15,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
         address: "",
     });
     const userId = isAuthenticated() && isAuthenticated().user._id;
+    const userAddress = isAuthenticated() && isAuthenticated().user.address;
     const token = isAuthenticated() && isAuthenticated().token;
 
     const getToken = (userId, token) => {
@@ -50,7 +51,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
             </div>
         );
 
-    let deliveryAddress = data.address;
+    let deliveryAddress = data.address ? data.address : userAddress;
 
     const buy = () => {
         setData({ loading: true });
@@ -167,7 +168,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
                 style={{ width: "100px", height: "100px" }}
                 role="status"
             >
-                <span class="sr-only">Loading...</span>
+                <span className="sr-only">Loading...</span>
             </div>
         );
     return (

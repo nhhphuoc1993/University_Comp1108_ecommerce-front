@@ -142,11 +142,7 @@ const Orders = () => {
                                                             </h5>
                                                             <h5>
                                                                 <strong>Delivery address:</strong>{" "}
-                                                                {o.address ? (
-                                                                    o.address
-                                                                ) : (
-                                                                    <i>Default buyer address</i>
-                                                                )}
+                                                                {o.address ? o.address : "N/A"}
                                                             </h5>
                                                             <h5>
                                                                 <strong>Transaction ID:</strong>{" "}

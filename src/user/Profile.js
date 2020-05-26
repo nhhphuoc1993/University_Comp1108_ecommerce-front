@@ -10,12 +10,13 @@ const Profile = ({ match }) => {
         name: "",
         email: "",
         password: "",
+        address: "",
         error: "",
         success: false,
     });
 
     const { token } = isAuthenticated();
-    const { name, email, password, error, success } = values;
+    const { name, email, password, address, error, success } = values;
 
     const init = (userId) => {
         // console.log(userId);
@@ -23,7 +24,7 @@ const Profile = ({ match }) => {
             if (data.error) {
                 setValues({ ...values, error: "" });
             } else {
-                setValues({ ...values, name: data.name, email: data.email });
+                setValues({ ...values, name: data.name, email: data.email, address: data.address });
             }
         });
     };
@@ -39,13 +40,19 @@ const Profile = ({ match }) => {
 
     const clickSubmit = (e) => {
         e.preventDefault();
-        update(match.params.userId, token, { name, email, password }).then((data) => {
+        update(match.params.userId, token, { name, email, password, address }).then((data) => {
             if (data.error) {
                 console.log(data.error);
                 setValues({ ...values, error: data.error, success: false });
             } else {
                 updateUser(data, () => {
-                    setValues({ ...values, name: data.name, email: data.email, success: true });
+                    setValues({
+                        ...values,
+                        name: data.name,
+                        email: data.email,
+                        address: data.address,
+                        success: true,
+                    });
                 });
             }
         });
@@ -57,7 +64,7 @@ const Profile = ({ match }) => {
         }
     };
 
-    const profileUpdate = (name, email, password) => (
+    const profileUpdate = (name, email, password, address) => (
         <form className="text-center p-5 mx-auto" action="#!" style={{ maxWidth: "700px" }}>
             <p className="h4 mb-4">Update profile</p>
 
@@ -95,6 +102,17 @@ const Profile = ({ match }) => {
                 />
             </div>
 
+            <div className="form-group text-left">
+                <label>Address</label>
+                <input
+                    className="form-control mb-4"
+                    placeholder="Address"
+                    onChange={handleChange("address")}
+                    type="text"
+                    value={address}
+                />
+            </div>
+
             <button onClick={clickSubmit} className="btn btn-info btn-block my-4" type="submit">
                 UPDATE
             </button>
@@ -117,7 +135,7 @@ const Profile = ({ match }) => {
     return (
         <Layout title="Profile Page" description="Update your profile" className="container-fluid">
             {showError(error)}
-            {profileUpdate(name, email, password)}
+            {profileUpdate(name, email, password, address)}
             {redirectUser(success)}
             {/* {JSON.stringify(values)} */}
         </Layout>
