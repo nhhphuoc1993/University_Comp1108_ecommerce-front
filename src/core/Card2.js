@@ -8,6 +8,8 @@ const Card2 = ({
     cardStyle = {},
     cardClass = "",
     cardImgStyle = {},
+    cardViewStyle = {},
+    cardBodyStyle = {},
     cardBodyClass = "text-center",
     cardBodyTitleClass = "",
     cardBodyTextStyle = {},
@@ -21,6 +23,9 @@ const Card2 = ({
     removeProductBtnClass = "",
     removeProductBtnStyle = {},
     product = {},
+    showDescription = true,
+    showCategory = true,
+    showAddedOn = true,
     showViewProductButton = true,
     showAddToCartButton = true,
     cartUpdate = false,
@@ -104,7 +109,7 @@ const Card2 = ({
 
     const showCartUpdateOptions = (cartUpdate) =>
         cartUpdate && (
-            <div className="input-group mt-2 mb-2" style={{ maxWidth: "305px" }}>
+            <div className="input-group mt-2 mb-3" style={{ maxWidth: "305px" }}>
                 <div className="input-group-prepend">
                     <span className="input-group-text">Quantity</span>
                 </div>
@@ -119,7 +124,7 @@ const Card2 = ({
     return (
         <div className={`card rounded ` + cardClass} style={cardStyle}>
             {shouldRedirect(redirect)}
-            <div className="view">
+            <div className="view" style={cardViewStyle}>
                 <img
                     src={`${API}/product/photo/${product._id}`}
                     className="card-img-top"
@@ -130,22 +135,28 @@ const Card2 = ({
                     <div className="mask rgba-white-slight"></div>
                 </Link>
             </div>
-            <div className={`card-body ` + cardBodyClass}>
+            <div className={`card-body ` + cardBodyClass} style={cardBodyStyle}>
                 <h4 className={`card-title ` + cardBodyTitleClass} style={cardBodyTitleStyle}>
                     {product.name}
                 </h4>
-                <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
-                    {product.description.substring(0, 100)}
-                </p>
+                {showDescription && (
+                    <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
+                        {product.description.substring(0, 100)}
+                    </p>
+                )}
                 <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
                     ${product.price}
                 </p>
-                <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
-                    Category: {product.category && product.category.name}
-                </p>
-                <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
-                    Added on {moment(product.createdAt).fromNow()}
-                </p>
+                {showCategory && (
+                    <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
+                        Category: {product.category && product.category.name}
+                    </p>
+                )}
+                {showAddedOn && (
+                    <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
+                        Added on {moment(product.createdAt).fromNow()}
+                    </p>
+                )}
                 <p className={`card-text ` + cardBodyTextClass} style={cardBodyTextStyle}>
                     {showStock(product.quantity)}
                 </p>

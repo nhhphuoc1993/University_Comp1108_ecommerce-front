@@ -29,7 +29,7 @@ const Cart = () => {
                             key={i}
                             product={product}
                             cardClass="m-3"
-                            cardStyle={{ width: "360px", height: "745px" }}
+                            cardStyle={{ width: "360px", height: "700px" }}
                             viewProductBtnClass="btn-sm btn-cyan rounded"
                             viewProductBtnStyle={{ fontWeight: "bold", width: "145px" }}
                             removeProductBtnClass="btn-sm btn-pink rounded"
@@ -41,6 +41,11 @@ const Cart = () => {
                             showRemoveProductButton={true}
                             setRun={setRun}
                             run={run}
+                            cardBodyTextStyle={{ fontSize: "20px" }}
+                            cardBodyTitleStyle={{ height: "55px" }}
+                            showDescription={false}
+                            showCategory={false}
+                            showAddedOn={false}
                         />
                     ))}
                 </div>

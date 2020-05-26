@@ -138,11 +138,16 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
         </div>
     );
 
-    const showError = (error) => (
-        <div className="alert alert-danger" role="alert" style={{ display: error ? "" : "none" }}>
-            <i className="fas fa-exclamation-circle fa-lg"></i> {error}
-        </div>
-    );
+    const showError = (error) =>
+        isAuthenticated() && (
+            <div
+                className="alert alert-danger"
+                role="alert"
+                style={{ display: error ? "" : "none" }}
+            >
+                <i className="fas fa-exclamation-circle fa-lg"></i> {error}
+            </div>
+        );
 
     const showSuccess = (success) => (
         <div

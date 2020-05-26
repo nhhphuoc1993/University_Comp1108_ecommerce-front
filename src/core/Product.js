@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Layout from "./Layout";
 import { read, listRelated } from "./apiCore";
 import Card from "./Card";
@@ -47,15 +47,14 @@ const Product = (props) => {
             >
                 {/* {JSON.stringify(product)} */}
                 <div className="col-9">
-                    <h3>
+                    <h3 className="mb-0">
                         <strong>Details</strong>
                     </h3>
                     {product && product.description && (
                         <Card2
                             product={product}
-                            cardClass="mb-3 border-0"
-                            cardStyle={{ width: "320px", height: "650px" }}
-                            cardBodyClass="text-left"
+                            cardClass="mt-4 border-0"
+                            cardBodyClass="text-left px-0"
                             cardBodyTitleStyle={{ fontSize: "xx-large" }}
                             cardBodyTextStyle={{ fontSize: "x-large" }}
                             showViewProductButton={false}
@@ -65,26 +64,32 @@ const Product = (props) => {
                                 width: "175px",
                                 marginLeft: "0px",
                             }}
-                            cardImgStyle={{ width: "100%", height: "370px" }}
+                            cardImgStyle={{ width: "320px", height: "400px" }}
+                            cardBodyStyle={{ height: "410px" }}
                         />
                     )}
                 </div>
                 <div className="col-3" style={{ paddingLeft: "60px" }}>
-                    <h3>
+                    <h3 className="mb-0">
                         <strong>Related Products</strong>
                     </h3>
                     {relatedProducts.map((product, i) => (
                         <Card2
                             key={i}
                             product={product}
-                            cardClass="mb-3"
-                            cardStyle={{ width: "320px", height: "650px" }}
+                            cardClass="my-4"
+                            cardStyle={{ width: "320px", height: "625px" }}
+                            groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
                             viewProductBtnClass="btn-sm btn-cyan rounded"
                             viewProductBtnStyle={{ fontWeight: "bold", width: "125px" }}
                             addToCartBtnClass="btn-sm btn-pink rounded"
                             addToCartBtnStyle={{ fontWeight: "bold", width: "125px" }}
-                            cardImgStyle={{ width: "100%", height: "370px" }}
-                            groupBtnStyle="d-flex align-content-center justify-content-around flex-wrap"
+                            cardViewStyle={{ width: "100%", height: "400px" }}
+                            cardBodyTextStyle={{ fontSize: "20px" }}
+                            cardBodyTitleStyle={{ height: "55px" }}
+                            showDescription={false}
+                            showCategory={false}
+                            showAddedOn={false}
                         />
                     ))}
                 </div>
