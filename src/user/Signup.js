@@ -17,7 +17,7 @@ const Signup = () => {
 
     // higher order function: function return a function
     const handleChange = (name) => (event) => {
-        setValues({ ...values, error: false, [name]: event.target.value });
+        setValues({ ...values, success: false, error: false, [name]: event.target.value });
     };
 
     const clickSubmit = (event) => {
