@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import Layout from "../core/Layout";
 import { signin, authenticate, isAuthenticated } from "../auth";
+import { MDBInput } from "mdbreact";
 
 const Signin = () => {
     const [values, setValues] = useState({
@@ -44,18 +45,18 @@ const Signin = () => {
         <form className="text-center p-5 mx-auto" action="#!" style={{ maxWidth: "700px" }}>
             <p className="h4 mb-4">Sign in</p>
 
-            <input
+            <MDBInput
+                label="Email"
                 onChange={handleChange("email")}
                 type="email"
                 className="form-control mb-4"
-                placeholder="Email"
                 value={email}
             />
 
-            <input
+            <MDBInput
+                label="Password"
                 type="password"
                 className="form-control mb-4"
-                placeholder="Password"
                 onChange={handleChange("password")}
                 value={password}
             />

@@ -35,7 +35,7 @@ const Profile = ({ match }) => {
 
     // wrap name and then wrap the event
     const handleChange = (name) => (e) => {
-        setValues({ ...values, error: "", [name]: e.target.value });
+        setValues({ ...values, error: "", success: false, [name]: e.target.value });
     };
 
     const clickSubmit = (e) => {
@@ -68,50 +68,38 @@ const Profile = ({ match }) => {
         <form className="text-center p-5 mx-auto" action="#!" style={{ maxWidth: "700px" }}>
             <p className="h4 mb-4">Update profile</p>
 
-            <div className="form-group text-left">
-                <label>Name</label>
-                <input
-                    className="form-control mb-4"
-                    placeholder="Name"
-                    onChange={handleChange("name")}
-                    type="text"
-                    value={name}
-                />
-            </div>
+            <MDBInput
+                label="Name"
+                className="form-control mb-4"
+                onChange={handleChange("name")}
+                type="text"
+                value={name}
+            />
 
-            <div className="form-group text-left">
-                <label>Email</label>
-                <input
-                    className="form-control mb-4"
-                    placeholder="Email"
-                    onChange={handleChange("email")}
-                    type="email"
-                    value={email}
-                    disabled
-                />
-            </div>
+            <MDBInput
+                label="Email"
+                className="form-control mb-4"
+                onChange={handleChange("email")}
+                type="email"
+                value={email}
+                disabled
+            />
 
-            <div className="form-group text-left">
-                <label>Password</label>
-                <input
-                    className="form-control mb-4"
-                    placeholder="New password"
-                    onChange={handleChange("password")}
-                    type="password"
-                    value={password}
-                />
-            </div>
+            <MDBInput
+                label="New password"
+                className="form-control mb-4"
+                onChange={handleChange("password")}
+                type="password"
+                value={password}
+            />
 
-            <div className="form-group text-left">
-                <label>Address</label>
-                <input
-                    className="form-control mb-4"
-                    placeholder="Address"
-                    onChange={handleChange("address")}
-                    type="text"
-                    value={address}
-                />
-            </div>
+            <MDBInput
+                label="Address"
+                className="form-control mb-4"
+                onChange={handleChange("address")}
+                type="text"
+                value={address}
+            />
 
             <button onClick={clickSubmit} className="btn btn-info btn-block my-4" type="submit">
                 UPDATE

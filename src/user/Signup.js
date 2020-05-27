@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../core/Layout";
 import { signup } from "../auth";
+import { MDBInput } from "mdbreact";
 
 const Signup = () => {
     const [values, setValues] = useState({
@@ -46,33 +47,33 @@ const Signup = () => {
         <form className="text-center p-5 mx-auto" action="#!" style={{ maxWidth: "700px" }}>
             <p className="h4 mb-4">Sign up</p>
 
-            <input
+            <MDBInput
+                label="Name"
                 className="form-control mb-4"
-                placeholder="Name"
                 onChange={handleChange("name")}
                 type="text"
                 value={name}
             />
 
-            <input
+            <MDBInput
+                label="Email"
                 className="form-control mb-4"
-                placeholder="Email"
                 onChange={handleChange("email")}
                 type="email"
                 value={email}
             />
 
-            <input
+            <MDBInput
+                label="Password"
                 className="form-control mb-4"
-                placeholder="Password"
                 onChange={handleChange("password")}
                 type="password"
                 value={password}
             />
 
-            <input
+            <MDBInput
+                label="Address"
                 className="form-control mb-4"
-                placeholder="Address"
                 onChange={handleChange("address")}
                 type="text"
                 value={address}
