@@ -48,7 +48,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
             <Fragment>{showDropIn()}</Fragment>
         ) : (
             <div className="alert alert-info" role="alert">
-                Please <Link to="/shop">signin</Link> to proceed checkout!
+                Please <Link to="/signin">signin</Link> to proceed checkout!
             </div>
         );
 

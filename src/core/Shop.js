@@ -169,7 +169,7 @@ const Shop = () => {
                             ))
                         ) : (
                             <h4 style={{ paddingLeft: "15px" }}>
-                                <em>Not find any product yet!</em>
+                                <em>No product found!</em>
                             </h4>
                         )}
                     </div>

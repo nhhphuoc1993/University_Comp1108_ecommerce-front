@@ -68,7 +68,12 @@ const Cart = () => {
         >
             <div
                 className="row"
-                style={{ marginRight: "auto", marginLeft: "auto", maxWidth: "1500px" }}
+                style={{
+                    marginRight: "auto",
+                    marginLeft: "auto",
+                    maxWidth: "1500px",
+                    minHeight: "188px",
+                }}
             >
                 <div className="col-8">
                     {items.length > 0 ? showItems(items) : noItemsMessage()}

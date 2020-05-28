@@ -142,7 +142,7 @@ const Search = () => {
                 ) : (
                     <div className="text-center">
                         <h4>
-                            <em>Not find any product yet!</em>
+                            <em>No product found!</em>
                         </h4>
                     </div>
                 )}

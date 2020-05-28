@@ -102,15 +102,15 @@ const UserDashboard = () => {
                                         <strong>Delivery address: </strong>
                                         {h.address ? h.address : "N/A"}
                                     </h6>
-                                    <div class="accordion" id={"puchasedItemsAccordion_" + i}>
-                                        <div class="card z-depth-0 bordered">
+                                    <div className="accordion" id={"puchasedItemsAccordion_" + i}>
+                                        <div className="card z-depth-0 bordered">
                                             <div
-                                                class="card-header cloudy-knoxville-gradient"
+                                                className="card-header cloudy-knoxville-gradient"
                                                 id={"puchasedItemsAccordion_" + i + "_headingOne"}
                                             >
-                                                <h5 class="mb-0">
+                                                <h5 className="mb-0">
                                                     <button
-                                                        class="btn btn-link btn-block text-left p-0"
+                                                        className="btn btn-link btn-block text-left p-0"
                                                         type="button"
                                                         data-toggle="collapse"
                                                         data-target={
@@ -127,13 +127,13 @@ const UserDashboard = () => {
                                             </div>
                                             <div
                                                 id={"puchasedItemsAccordion_" + i + "_collapseOne"}
-                                                class="collapse show"
+                                                className="collapse show"
                                                 aria-labelledby={
                                                     "puchasedItemsAccordion_" + i + "_headingOne"
                                                 }
                                                 data-parent={"#puchasedItemsAccordion_" + i}
                                             >
-                                                <div class="card-body">
+                                                <div className="card-body">
                                                     {h.products.map((p, i) => {
                                                         return (
                                                             <div key={i}>
