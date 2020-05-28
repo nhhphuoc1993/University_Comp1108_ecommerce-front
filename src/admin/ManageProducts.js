@@ -52,7 +52,7 @@ const ManageProducts = () => {
             className="col-11 mx-auto my-5"
         >
             {showProductsLength()}
-            <div class="table-responsive">
+            <div className="table-responsive">
                 <table className="table table-hover">
                     <thead>
                         <tr>
@@ -69,7 +69,6 @@ const ManageProducts = () => {
                     </thead>
                     <tbody>
                         {products.map((p, i) => {
-                            console.log(p);
                             return (
                                 <tr key={i}>
                                     <th className="align-middle" scope="row">
@@ -88,7 +87,7 @@ const ManageProducts = () => {
                                         <Link to={`/admin/product/update/${p._id}`}>
                                             <button
                                                 type="button"
-                                                class="btn btn-success p-0"
+                                                className="btn btn-success p-0"
                                                 style={{
                                                     borderRadius: "40px",
                                                     width: "40px",
@@ -96,14 +95,14 @@ const ManageProducts = () => {
                                                 }}
                                             >
                                                 <i
-                                                    class="fas fa-pencil-alt fa-lg"
+                                                    className="fas fa-pencil-alt fa-lg"
                                                     aria-hidden="true"
                                                 ></i>
                                             </button>
                                         </Link>
                                         <button
                                             type="button"
-                                            class="btn btn-danger p-0"
+                                            className="btn btn-danger p-0"
                                             style={{
                                                 borderRadius: "40px",
                                                 width: "40px",
@@ -111,7 +110,10 @@ const ManageProducts = () => {
                                             }}
                                             onClick={() => destroy(p._id)}
                                         >
-                                            <i class="fas fa-trash fa-lg" aria-hidden="true"></i>
+                                            <i
+                                                className="fas fa-trash fa-lg"
+                                                aria-hidden="true"
+                                            ></i>
                                         </button>
                                     </td>
                                 </tr>

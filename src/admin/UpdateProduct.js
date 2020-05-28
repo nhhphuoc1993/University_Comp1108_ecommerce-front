@@ -135,7 +135,7 @@ const UpdateProduct = ({ match }) => {
         >
             <p className="h4 mb-4">Create product</p>
 
-            <div class="input-group mb-4">
+            <div className="input-group mb-4">
                 <label className="my-auto mr-2">Image</label>
                 <input onChange={handleChange("photo")} type="file" name="photo" accept="image/*" />
             </div>
@@ -192,7 +192,7 @@ const UpdateProduct = ({ match }) => {
             </button>
 
             <p>
-                Back to <Link to="/admin/dashboard">admin dashboard</Link>
+                Back to <Link to="/admin/products">mange products</Link>
             </p>
         </form>
     );
